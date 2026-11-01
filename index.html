@@ -1,3 +1,216 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>tokpi 채팅창 주문제작</title></head>
-<body style="margin:0;font-family:sans-serif;display:grid;place-items:center;min-height:100vh;background:#fff7d6"><p>tokpi 채팅창 주문제작 페이지 준비 중</p></body></html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>tokpi 채팅창 주문제작</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+<div class="page" id="top">
+
+  <nav class="nav" id="nav" aria-label="페이지 메뉴">
+    <div class="nav-inner">
+      <a class="brand" href="#top" data-go="top"><img src="assets/logo.svg" alt="" width="30" height="30"><span>tokpi</span></a>
+      <div class="nav-links">
+        <a href="#preview" data-go="preview">미리보기</a>
+        <a href="#price" data-go="price">가격</a>
+        <a href="#process" data-go="process">진행</a>
+        <a href="#cases" data-go="cases">사례</a>
+        <a href="#notice" data-go="notice">주의사항</a>
+      </div>
+      <a class="nav-cta" href="#form" data-go="form">신청 양식</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <span class="spark s1">✦</span><span class="spark s2">✦</span><span class="spark s3">✧</span>
+    <div class="hero-copy">
+      <span class="badge">스트리머를 위한 채팅창 스튜디오</span>
+      <h1>우리 방송만의<br><span class="hl">채팅창</span>, 주문제작</h1>
+      <p class="lead">로고와 캐릭터, 방송 색을 담아<br class="br-m"> 방송 화면에 바로 쓰는 채팅창을 만들어 드려요.</p>
+      <ul class="tags">
+        <li>로고</li><li>캐릭터</li><li>컬러</li><li>후원·구독</li><li>플랫폼 맞춤</li>
+      </ul>
+      <div class="hero-btns">
+        <a class="btn btn-ink" href="#form" data-go="form">신청 양식 쓰기</a>
+        <a class="btn btn-paper" href="#preview" data-go="preview">미리보기 보기</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="bubble b1">안녕하세요~! 👋</div>
+      <div class="bubble b2">채팅창 너무 귀여워요</div>
+      <div class="bubble b3">구독 감사합니다 ♥</div>
+      <img src="assets/mascot-maker.webp" alt="채팅창을 만드는 tokpi 마스코트" width="640" height="640">
+    </div>
+  </header>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>CHAT BOX STUDIO ✦ 채팅창 주문제작 ✦ 위플랩 · 치지직 · SOOP ✦ 시안 1개 + 수정 1회 ✦ </span>
+      <span>CHAT BOX STUDIO ✦ 채팅창 주문제작 ✦ 위플랩 · 치지직 · SOOP ✦ 시안 1개 + 수정 1회 ✦ </span>
+    </div>
+  </div>
+
+  <section class="sec" id="preview">
+    <div class="sec-head">
+      <span class="kicker">PREVIEW</span>
+      <h2>방송 화면에서는 이렇게 움직여요</h2>
+      <p>tokpi가 무료로 공개한 할로윈 채팅창이에요. 실제 방송처럼 채팅이 올라와요.</p>
+    </div>
+    <div class="preview-wrap">
+      <div class="preview-tabs" role="tablist">
+        <button type="button" role="tab" class="tab is-on" data-preview="witch" aria-selected="true">마녀 🧙</button>
+        <button type="button" role="tab" class="tab" data-preview="ghost" aria-selected="false">유령 👻</button>
+      </div>
+      <div class="preview-stage">
+        <div class="preview-screen" id="previewScreen" data-bg="witch">
+          <div class="preview-box" id="previewBox">
+            <iframe id="previewFrame" src="previews/witch.html" width="500" height="800" title="채팅창 미리보기" scrolling="no"></iframe>
+          </div>
+        </div>
+        <ul class="feature-list">
+          <li><b>방송 색 그대로</b><span>로고·캐릭터·메인 컬러를 채팅 말풍선과 닉네임에 녹여요.</span></li>
+          <li><b>역할마다 다르게</b><span>시청자·구독자·스트리머 채팅을 구분해 보여 줄 수 있어요.</span></li>
+          <li><b>후원·구독 카드</b><span>후원과 구독 알림도 같은 디자인으로 맞춰요.</span></li>
+          <li><b>복사해서 끝</b><span>완성된 CSS와 설치 안내를 드려요. 붙여 넣기만 하면 돼요.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-lilac" id="price">
+    <div class="sec-head">
+      <span class="kicker">PRICE</span>
+      <h2>단계를 골라 주세요</h2>
+      <p>모든 단계에 시안 1개와 수정 <span data-revision>1</span>회가 들어 있어요.</p>
+    </div>
+    <div class="tiers" id="tiers"></div>
+    <div class="omakase" id="omakaseBox" hidden>
+      <label class="switch"><input type="checkbox" id="omakase"><span class="slider"></span></label>
+      <div><b>오마카세로 맡기기</b><p>시안 확인과 수정 없이 맡겨 주시면 완성본으로 드려요. 오류는 고쳐 드려요.</p></div>
+    </div>
+    <div class="estimate">
+      <div class="estimate-opts">
+        <h3>추가 옵션</h3>
+        <div id="options"></div>
+      </div>
+      <div class="estimate-sum">
+        <span class="sum-label">예상 견적</span>
+        <strong id="sumPrice">가격 준비 중</strong>
+        <span class="sum-days" id="sumDays"></span>
+        <p class="sum-note">최종 금액은 아트머그 결제 화면 기준이에요.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="process">
+    <div class="sec-head">
+      <span class="kicker">PROCESS</span>
+      <h2>이렇게 진행돼요</h2>
+    </div>
+    <ol class="steps">
+      <li><span class="num">1</span><b>아트머그 문의</b><p>아래 신청 양식을 복사해서 아트머그 문의로 보내 주세요.</p></li>
+      <li><span class="num">2</span><b>결제</b><p>내용을 확인하고 견적을 안내드리면 아트머그에서 결제해 주세요.</p></li>
+      <li><span class="num">3</span><b>시안 1개</b><p>말씀해 주신 분위기로 시안을 하나 보내 드려요.</p></li>
+      <li><span class="num">4</span><b>수정 <span data-revision>1</span>회</b><p>시안을 보고 고칠 곳을 한 번에 알려 주세요.</p></li>
+      <li><span class="num">5</span><b>완성</b><p>완성 CSS와 설치 안내를 드려요.</p></li>
+    </ol>
+    <p class="days-line" id="daysLine"></p>
+  </section>
+
+  <section class="sec sec-night" id="cases">
+    <div class="sec-head">
+      <span class="kicker">CASES</span>
+      <h2>tokpi가 만든 채팅창</h2>
+      <p>할로윈 시즌에 무료로 공개했던 채팅창이에요.</p>
+    </div>
+    <div class="cases">
+      <figure class="case c1">
+        <img src="assets/case-witch.webp" alt="마녀 할로윈 채팅창" width="1000" height="1276">
+        <figcaption><b>마녀의 밤</b><span>할로윈 무료 공개 · 채팅 + 후원 카드</span></figcaption>
+      </figure>
+      <figure class="case c2">
+        <img src="assets/case-ghost.webp" alt="유령 할로윈 채팅창" width="1000" height="1276">
+        <figcaption><b>꼬마 유령</b><span>할로윈 무료 공개 · 채팅 + 후원 카드</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" id="notice">
+    <div class="sec-head">
+      <span class="kicker">NOTICE</span>
+      <h2>신청 전에 꼭 읽어 주세요</h2>
+    </div>
+    <div class="notice">
+      <details open>
+        <summary>이용 범위</summary>
+        <p>신청하신 분의 방송 채널 하나에서 쓸 수 있어요. 수익이 나는 방송에서도 괜찮아요. 다른 분께 넘기거나 되팔기, 다시 배포하기는 안 돼요.</p>
+      </details>
+      <details>
+        <summary>수정 범위</summary>
+        <p>수정은 <span data-revision>1</span>회예요. 색·글자 크기·간격처럼 시안 안에서 고치는 것을 말해요. 디자인 방향을 처음부터 바꾸는 것은 새 작업으로 안내드려요.</p>
+      </details>
+      <details>
+        <summary>환불</summary>
+        <p>환불은 아트머그 규정을 따라요. 시안 작업이 시작된 뒤에는 환불이 어려울 수 있어요.</p>
+      </details>
+      <details>
+        <summary>저작권 · 포트폴리오</summary>
+        <p>디자인 저작권은 tokpi에 있어요. 완성작은 tokpi 포트폴리오로 공개할 수 있어요.</p>
+      </details>
+      <details>
+        <summary>지원 플랫폼</summary>
+        <p>위플랩 채팅창 기준으로 만들어요(치지직·SOOP 방송에서 사용). 다른 프로그램은 문의 때 먼저 알려 주세요.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="sec sec-lilac" id="form">
+    <div class="sec-head">
+      <span class="kicker">ORDER FORM</span>
+      <h2>신청 양식</h2>
+      <p>칸을 채우고 「양식 복사」를 누른 뒤, 아트머그 문의 창에 붙여 넣어 주세요.</p>
+    </div>
+    <form class="order" id="orderForm" autocomplete="off">
+      <label><span>채널 이름</span><input name="channel" placeholder="예) 오늘도 방송국"></label>
+      <label><span>방송 플랫폼</span>
+        <select name="platform"><option>위플랩 (치지직)</option><option>위플랩 (SOOP)</option><option>기타 (문의 때 알려 주세요)</option></select>
+      </label>
+      <label><span>단계</span><select name="tier" id="tierSelect"></select></label>
+      <label><span>원하는 분위기</span><input name="mood" placeholder="예) 귀엽고 몽글몽글, 픽셀 게임 느낌"></label>
+      <label><span>메인 색</span><input name="color" placeholder="예) 연보라 + 노랑"></label>
+      <label><span>로고·캐릭터</span>
+        <select name="assets"><option>둘 다 있어요</option><option>로고만 있어요</option><option>캐릭터만 있어요</option><option>없어요</option></select>
+      </label>
+      <label class="wide"><span>참고 자료</span><textarea name="refs" rows="3" placeholder="좋아하는 채팅창이나 분위기를 글로 적어 주세요. 이미지는 아트머그 문의에 첨부해 주세요."></textarea></label>
+      <label><span>희망 일정</span><input name="date" placeholder="예) 11월 20일 방송 전까지"></label>
+      <label><span>추가 옵션</span><input name="opts" id="optsField" readonly placeholder="위 견적에서 고른 옵션이 들어가요"></label>
+      <div class="order-foot wide">
+        <button type="button" class="btn btn-ink" id="copyBtn">양식 복사</button>
+        <span class="order-hint">개인 연락처는 적지 마세요. 아트머그 문의로만 이야기해요.</span>
+      </div>
+    </form>
+  </section>
+
+  <section class="closing">
+    <img src="assets/mascot-hello.webp" alt="" width="640" height="640">
+    <div>
+      <h2>나만의 채팅창이 필요하다면?</h2>
+      <a class="btn btn-ink" href="#form" data-go="form">신청 양식 쓰러 가기</a>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <img src="assets/logo.svg" alt="" width="26" height="26"><span>tokpi · 스트리머를 위한 채팅창 스튜디오</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="config.js?v=1"></script>
+<script src="app.js?v=1"></script>
+</body>
+</html>
