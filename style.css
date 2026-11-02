@@ -232,6 +232,7 @@ a.credit:hover b { text-decoration: underline; }
 }
 .sum-label { color: var(--on-night); font-weight: 600; }
 .estimate-sum strong { font-family: var(--display); font-weight: 400; font-size: 34px; color: var(--yellow); line-height: 1.2; }
+.estimate-sum strong small { font-family: var(--body); font-weight: 700; font-size: 18px; color: var(--on-night); }
 .sum-note { margin-top: 8px; font-size: 13px; color: var(--on-night); }
 
 /* steps */

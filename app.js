@@ -98,6 +98,7 @@
   /* ---------- 구성·가격: 기본 구성 + 옵션, 왼쪽 미리보기 ---------- */
   var won = function (n) { return n.toLocaleString('ko-KR') + '원'; };
   var TBD = '가격 준비 중';
+  var ASK = '별도 문의';
   var state = {};
   C.options.forEach(function (o) { state[o.id] = !!o.on; });
 
@@ -119,6 +120,7 @@
   $('#basePrice').innerHTML = (C.base.price == null ? TBD : promo ? '<s>' + won(C.base.price) + '</s> ' + won(promoPrice(C.base.price)) : won(C.base.price));
 
   function optPrice(o) {
+    if (o.ask) return ASK;
     if (o.value == null) return TBD;
     return o.kind === 'percent' ? '+' + o.value + '%' : '+' + won(o.value);
   }
@@ -187,13 +189,15 @@
     var total = C.base.price;
     var pct = 0;
     opts.forEach(function (o) {
+      if (o.ask) return;
       if (total == null || o.value == null) { total = null; return; }
       if (o.kind === 'percent') pct += o.value; else total += o.value;
     });
     if (total != null) total += Math.round(total * pct / 100);
     var full = total;
     if (promo && total != null) total = promoPrice(total);
-    $('#sumPrice').textContent = total == null ? TBD : won(total);
+    var asked = opts.some(function (o) { return o.ask; });
+    $('#sumPrice').innerHTML = total == null ? TBD : won(total) + (asked ? '<small> + ' + ASK + '</small>' : '');
     $('#sumWas').textContent = full == null ? '' : won(full);
     $('#sumWas').hidden = !promo || full == null;
 
@@ -201,7 +205,7 @@
     opts.forEach(function (o) { days += o.days || 0; });
     if (opts.some(function (o) { return o.half; })) days = Math.ceil(days / 2);
 
-    var totalText = total == null ? TBD : won(total);
+    var totalText = total == null ? TBD : won(total) + (asked ? ' + ' + ASK : '');
     var daysText = '작업 기간 약 ' + days + '일';
     var rows = pickRows(opts);
     if (promo) rows.push({ promo: true, label: promo.tag + ' ' + promo.title, price: full == null ? '-' + promo.percent + '%' : '-' + won(full - total) });

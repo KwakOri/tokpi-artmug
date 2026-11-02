@@ -18,13 +18,14 @@ window.TOKPI_CONFIG = {
    * kind: 'won'은 금액을 더하고, 'percent'는 나머지 합계에 비율을 더한다.
    * days: 작업 기간에 더할 날 수. half: true면 작업 기간을 절반으로.
    * needs: 이 옵션을 켜면 함께 켜지는 옵션.
+   * ask: true면 가격 칸에 「별도 문의」로 보이고, 견적 합계에는 넣지 않고 「+ 별도 문의」만 붙인다.
    */
   options: [
     { id: 'cards', label: '구독·후원 카드', note: '구독·후원이 오면 테마 카드로 떠요', preview: 'cards', on: true, kind: 'won', value: 30000, days: 0 },
     { id: 'roles', label: '스트리머·구독자 채팅 따로', note: '역할마다 이름표와 말풍선이 달라요', preview: 'roles', on: true, kind: 'won', value: 30000, days: 3 },
     { id: 'fx', label: '구독·후원 화려한 연출', note: '쾅 떨어지고 반짝이며 등장해요', preview: 'fx', needs: 'cards', kind: 'won', value: 20000, days: 2 },
     { id: 'tiers', label: '금액별 후원 카드', note: '1만·10만·100만 원 이상 후원마다 카드가 달라져요', design: true, needs: 'cards', kind: 'won', value: 30000, days: 2 },
-    { id: 'random', label: '랜덤 디자인', note: '채팅·구독·후원 카드가 2~3가지 디자인 중 무작위로 떠요', design: true, kind: 'won', value: 20000, days: 2 },
+    { id: 'random', label: '랜덤 요소 추가', note: '채팅·구독·후원 카드가 2~3가지 디자인 중 무작위로 떠요', design: true, ask: true },
     { id: 'rush', label: '빠른 마감', note: '작업 기간 절반', kind: 'percent', value: 50, half: true },
     { id: 'private', label: '포트폴리오 비공개', note: '완성작을 공개하지 않아요', kind: 'won', value: 20000 },
   ],
