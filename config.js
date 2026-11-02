@@ -27,4 +27,18 @@ window.TOKPI_CONFIG = {
     { id: 'rush', label: '빠른 마감', note: '작업 기간 절반', kind: 'percent', value: 50, half: true },
     { id: 'private', label: '포트폴리오 비공개', note: '완성작을 공개하지 않아요', kind: 'won', value: 20000 },
   ],
+  /*
+   * 슬롯: 구글 시트 「공개」 탭을 웹에 CSV로 게시한 주소(파일 > 공유 > 웹에 게시 > 공개 탭 · CSV).
+   * 칸: 월(2026-11) | 전체 | 예약 | 상태(열림·마감·오픈 예정·휴식) | 안내. 틀은 sheets/slots-public.csv.
+   * csvUrl이 null이면 슬롯 칸을 숨긴다. 주소 뒤에 ?slots=demo를 붙이면 demo 값으로 미리 본다.
+   */
+  slots: {
+    csvUrl: null,
+    months: 3,
+    demo: [
+      ['2026-11', 5, 5, '열림', ''],
+      ['2026-12', 5, 2, '열림', ''],
+      ['2027-01', 5, 0, '오픈 예정', '12월 15일 오픈'],
+    ],
+  },
 };

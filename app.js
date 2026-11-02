@@ -67,7 +67,7 @@
   function markNav() {
     var probe = embedded && viewport ? -viewport.iframeTop + nav.offsetHeight + 40 : window.scrollY + nav.offsetHeight + 40;
     var current = null;
-    sections.forEach(function (s) { if (s && s.offsetTop <= probe) current = s.id; });
+    sections.forEach(function (s) { if (s && !s.hidden && s.offsetTop <= probe) current = s.id; });
     $$('.nav-links a').forEach(function (a) { a.classList.toggle('is-on', a.getAttribute('data-go') === current); });
   }
   window.addEventListener('scroll', markNav, { passive: true });
@@ -102,8 +102,8 @@
   C.options.forEach(function (o) {
     var l = document.createElement('label');
     l.className = 'opt';
-    l.innerHTML = '<span><b>' + o.label + '</b><small>' + o.note + ' · ' + optPrice(o) + (o.days ? ' · +' + o.days + '일' : '') + '</small></span>' +
-      '<span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
+    l.innerHTML = '<span class="opt-text"><b>' + o.label + '</b><small>' + o.note + '</small></span>' +
+      '<em class="opt-price">' + optPrice(o) + '</em><span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
     var input = l.querySelector('input');
     input.checked = state[o.id];
     input.addEventListener('change', function () { setOpt(o.id, input.checked); });
@@ -186,6 +186,81 @@
 
   $('#daysLine').textContent = '작업 기간 · ' + C.base.name + ' 약 ' + C.base.days + '일, 옵션에 따라 늘어나요 (결제 후부터)';
   render();
+
+  /* ---------- 슬롯: 구글 시트 「공개」 탭 CSV ---------- */
+  function parseCsv(text) {
+    var rows = [], row = [], cell = '', q = false;
+    for (var i = 0; i < text.length; i++) {
+      var ch = text[i];
+      if (q) {
+        if (ch === '"' && text[i + 1] === '"') { cell += '"'; i++; }
+        else if (ch === '"') q = false;
+        else cell += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ',') { row.push(cell); cell = ''; }
+      else if (ch === '\n' || ch === '\r') {
+        if (ch === '\r' && text[i + 1] === '\n') i++;
+        row.push(cell); rows.push(row); row = []; cell = '';
+      } else cell += ch;
+    }
+    if (cell || row.length) { row.push(cell); rows.push(row); }
+    return rows;
+  }
+
+  function monthLabel(ym) {
+    var m = /^(\d{4})-(\d{1,2})/.exec(ym);
+    if (!m) return ym;
+    return (+m[1] !== new Date().getFullYear() ? '<small>' + m[1] + '년</small>' : '') + (+m[2]) + '월';
+  }
+
+  function slotState(r) {
+    var total = Math.max(0, parseInt(r[1], 10) || 0);
+    var booked = Math.min(total, Math.max(0, parseInt(r[2], 10) || 0));
+    var st = (r[3] || '').trim();
+    var kind = st === '오픈 예정' ? 'soon' : st === '휴식' ? 'off' : (st === '마감' || booked >= total) ? 'full' : 'open';
+    /* 시트가 「2026-11」을 날짜로 바꿔 「2026. 11. 1」처럼 내보내도 읽는다 */
+    var ym = /(\d{4})\D+(\d{1,2})/.exec(r[0] || '');
+    var month = ym ? ym[1] + '-' + ('0' + ym[2]).slice(-2) : '';
+    return { month: month, label: monthLabel(month), total: total, booked: booked, left: total - booked, kind: kind, note: (r[4] || '').trim() };
+  }
+
+  var SLOT_PILL = { open: function (s) { return s.left + '자리 남음'; }, full: function () { return '마감'; }, soon: function () { return '오픈 예정'; }, off: function () { return '쉬어요'; } };
+
+  function renderSlots(rows) {
+    var now = new Date();
+    var cur = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2);
+    var list = rows.map(slotState).filter(function (s) { return /^\d{4}-\d{2}/.test(s.month) && s.month.slice(0, 7) >= cur; }).slice(0, C.slots.months || 3);
+    if (!list.length) return;
+    $('#slotList').innerHTML = list.map(function (s) {
+      var dots = '';
+      for (var i = 0; i < s.total; i++) dots += '<i class="' + (i < s.booked ? 'is-booked' : '') + '"></i>';
+      return '<article class="slot is-' + s.kind + '">' +
+        '<div class="slot-top"><h3>' + s.label + '</h3><span class="slot-pill">' + SLOT_PILL[s.kind](s) + '</span></div>' +
+        (s.kind === 'off' ? '' : '<div class="slot-dots" aria-label="전체 ' + s.total + '자리 중 ' + s.booked + '자리 예약">' + dots + '</div>') +
+        '<p class="slot-sub">' + (s.note || (s.kind === 'open' ? s.total + '자리 중 ' + s.booked + '자리 예약' : s.kind === 'off' ? '이달은 작업을 쉬어요' : '')) + '</p>' +
+        '</article>';
+    }).join('');
+    $('#slot').hidden = false;
+    $$('[data-slot-link]').forEach(function (a) { a.hidden = false; });
+    sections = $$('.nav-links a').map(function (a) { return document.getElementById(a.getAttribute('data-go')); });
+    var first = list.filter(function (s) { return s.kind === 'open'; })[0];
+    var badge = $('#slotBadge');
+    badge.textContent = first ? first.label.replace(/<\/?small>/g, '').replace('년', '년 ') + ' 슬롯 ' + first.left + '자리 남음' : '이번 슬롯은 마감됐어요';
+    badge.classList.toggle('is-full', !first);
+    badge.hidden = false;
+    sendHeight(true);
+  }
+
+  if (C.slots) {
+    if (C.slots.csvUrl) {
+      fetch(C.slots.csvUrl, { cache: 'no-store' })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+        .then(function (t) { renderSlots(parseCsv(t).slice(1)); })
+        .catch(function () { /* 시트를 못 읽으면 슬롯 칸을 숨긴 채로 둔다 */ });
+    } else if (/[?&]slots=demo\b/.test(location.search)) {
+      renderSlots(C.slots.demo);
+    }
+  }
 
   /* ---------- 신청 양식 복사 ---------- */
   var toastTimer;

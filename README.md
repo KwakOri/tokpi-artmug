@@ -7,3 +7,4 @@
 - `artmug-parent.js`: 아트머그 커스텀 메뉴 칸에 넣는 스크립트 (iframe 높이, 접힘 해제, 스크롤, 고정 메뉴)
 - `assets/video/`: 갤러리 채팅창 영상(540×960, 18초 반복, webm·mp4·첫 장면 jpg). 마녀·유령 원본은 tokpi-landing `assets/posters/halloween-2026/tokpi-halloween-<witch|ghost>-ko.mp4`, 미루루는 chat-duck-shared `miruru02/2026-10-31-delivery-c01`(R7)을 site-preview로 만들어 같은 record.mjs 방식으로 녹화(예시 채팅 문구만 미루루용으로 바꿈)
 - `ARTMUG_CODE.md`: 아트머그에 붙여 넣을 코드
+- `sheets/`: 슬롯 관리 구글 시트 틀. `slots-public.csv`→「공개」 탭, `slots-manage.csv`→「관리」 탭(탭 이름을 그대로 써야 공개 탭의 예약 수 수식이 관리 탭을 센다). 공개 탭만 「웹에 게시 > CSV」로 게시하고 그 주소를 `config.js`의 `slots.csvUrl`에 넣는다. 시트 전체 공유(링크가 있는 모든 사용자)는 켜지 않는다. 주소가 없으면 슬롯 칸은 숨겨지고, `?slots=demo`로 예시를 볼 수 있다.
