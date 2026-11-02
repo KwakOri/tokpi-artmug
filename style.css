@@ -251,10 +251,6 @@ a.credit:hover b { text-decoration: underline; }
 .steps li:last-child .num { background: var(--orange); color: var(--paper); }
 .steps b { font-size: 17px; display: block; margin-bottom: 6px; }
 .steps p { font-size: 14px; color: var(--muted); }
-.days-line {
-  text-align: center; margin: 44px auto 0; width: fit-content; font-weight: 700;
-  background: var(--lilac-bg); border: 2px dashed var(--purple); border-radius: 999px; padding: 8px 20px;
-}
 
 /* notice */
 .notice { max-width: 820px; margin: 0 auto; display: grid; gap: 12px; }
