@@ -4,14 +4,14 @@
  * 아트머그 상품 정보 칸(가격·작업 기간)과 숫자를 맞출 것.
  */
 window.TOKPI_CONFIG = {
-  revision: 1,
+  revision: 2,
   showOmakase: false,
   tiers: [
     {
       id: 'light',
       name: '라이트',
       summary: '채팅 한 가지만 깔끔하게',
-      items: ['채팅 1종', '시안 1개'],
+      items: ['채팅 1종', '시안 제공'],
       price: null,
       omakase: null,
       days: 7,
@@ -20,7 +20,7 @@ window.TOKPI_CONFIG = {
       id: 'standard',
       name: '스탠다드',
       summary: '채팅에 구독·후원 카드까지 한 디자인으로',
-      items: ['채팅 1종', '구독·후원 카드', '시안 1개'],
+      items: ['채팅 1종', '구독·후원 카드', '시안 제공'],
       price: null,
       omakase: null,
       days: 7,
@@ -30,7 +30,7 @@ window.TOKPI_CONFIG = {
       id: 'pro',
       name: '프로',
       summary: '시청자·구독자·스트리머 채팅을 각각 다르게',
-      items: ['시청자·구독자·스트리머 채팅', '구독·후원 카드', '시안 1개'],
+      items: ['시청자·구독자·스트리머 채팅', '구독·후원 카드', '시안 제공'],
       price: null,
       omakase: null,
       days: 10,

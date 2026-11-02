@@ -8,7 +8,7 @@
 <section name="am-root">
   <div name="fallback" style="padding:24px;border:3px solid #1b1530;border-radius:20px;background:#fff7e8;text-align:center;line-height:1.7;">
     <b style="font-size:20px;">tokpi 채팅창 주문제작</b><br>
-    라이트 · 스탠다드 · 프로 / 시안 1개 + 수정 1회<br>
+    라이트 · 스탠다드 · 프로 / 시안 제공 + 수정 2회<br>
     가격과 작업 기간은 상품 정보를 확인해 주세요.
   </div>
   <div name="stage">

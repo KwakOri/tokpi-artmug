@@ -274,6 +274,8 @@ p { margin: 0; }
 }
 .notice details[open] summary::after { content: '−'; background: var(--lilac); }
 .notice details p { padding: 0 20px 18px; color: var(--muted); }
+.notice details ul { margin: 0; padding: 0 20px 18px 40px; color: var(--muted); display: grid; gap: 6px; }
+.notice details b { color: var(--ink); }
 
 /* form */
 .order {

@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
 <div class="page" id="top">
@@ -98,8 +98,8 @@
     <ol class="steps">
       <li><span class="num">1</span><b>아트머그 문의</b><p>아래 신청 양식을 복사해서 아트머그 문의로 보내 주세요.</p></li>
       <li><span class="num">2</span><b>결제</b><p>내용을 확인하고 견적을 안내드리면 아트머그에서 결제해 주세요.</p></li>
-      <li><span class="num">3</span><b>시안 1개</b><p>말씀해 주신 분위기로 시안을 하나 보내 드려요.</p></li>
-      <li><span class="num">4</span><b>수정 <span data-revision>1</span>회</b><p>시안을 보고 고칠 곳을 한 번에 알려 주세요.</p></li>
+      <li><span class="num">3</span><b>시안 제공</b><p>말씀해 주신 분위기로 시안을 보내 드려요.</p></li>
+      <li><span class="num">4</span><b>수정 <span data-revision>1</span>회</b><p>시안을 보고 고칠 곳을 모아서 알려 주세요.</p></li>
       <li><span class="num">5</span><b>완성</b><p>완성 CSS와 설치 안내를 드려요.</p></li>
     </ol>
     <p class="days-line" id="daysLine"></p>
@@ -112,24 +112,64 @@
     </div>
     <div class="notice">
       <details open>
-        <summary>이용 범위</summary>
-        <p>신청하신 분의 방송 채널 하나에서 쓸 수 있어요. 수익이 나는 방송에서도 괜찮아요. 다른 분께 넘기거나 되팔기, 다시 배포하기는 안 돼요.</p>
+        <summary>신청 전에 준비해 주세요</summary>
+        <ul>
+          <li>방송 화면(배경)이나 캐릭터·로고 같은 <b>참고 자료가 있어야 시작할 수 있어요.</b> 문의할 때 이미지로 첨부해 주세요.</li>
+          <li>원하는 분위기·색, 마음에 드는 채팅창이 있으면 함께 알려 주세요. 자세할수록 시안이 가까워져요.</li>
+          <li>원하는 움직임(말풍선이 튀어 오르기, 반짝임 등)이 있으면 <b>문의 때 미리</b> 말씀해 주세요. 시안이 나온 뒤에 더하면 새 작업이 될 수 있어요.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>지원 플랫폼</summary>
+        <p>위플랩 채팅창 기준으로 만들어요(치지직·SOOP 방송에서 사용). 다른 프로그램은 문의 때 먼저 알려 주세요.</p>
+      </details>
+      <details>
+        <summary>작업 범위</summary>
+        <ul>
+          <li>고른 단계에 들어 있는 것만 만들어요. 방송 배경·오버레이·일러스트 그리기는 하지 않아요.</li>
+          <li>글꼴은 방송에 무료로 쓸 수 있는 웹 글꼴을 써요. 유료 글꼴을 원하시면 갖고 계신 사용권을 알려 주세요.</li>
+          <li>완성본은 위플랩에 붙여 넣는 CSS와 설치 안내로 드려요.</li>
+        </ul>
       </details>
       <details>
         <summary>수정 범위</summary>
-        <p>수정은 <span data-revision>1</span>회예요. 색·글자 크기·간격처럼 시안 안에서 고치는 것을 말해요. 디자인 방향을 처음부터 바꾸는 것은 새 작업으로 안내드려요.</p>
+        <ul>
+          <li>수정은 <span data-revision>2</span>회예요. 색·글자 크기·간격·위치처럼 시안 안에서 고치는 것을 말해요.</li>
+          <li>고칠 곳은 한 번에 모아서 알려 주세요. 나눠서 보내면 각각 한 번으로 세요.</li>
+          <li>시안이 정해진 뒤 디자인 방향을 바꾸거나, 구조·기능을 새로 더하는 것은 새 작업으로 안내드려요(추가 금액이 있어요).</li>
+          <li>완성 뒤 설치하다 생긴 오류나 깨짐은 수정 횟수와 상관없이 고쳐 드려요.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>일정</summary>
+        <ul>
+          <li>제작 기간은 결제를 확인한 날부터 세요.</li>
+          <li>자료 전달이나 시안 확인이 늦어지면 전체 일정도 그만큼 늦어져요.</li>
+          <li>방송 날짜가 정해져 있으면 문의 때 알려 주세요. 빠른 마감은 일정에 따라 어려울 수 있어요.</li>
+        </ul>
       </details>
       <details>
         <summary>환불</summary>
         <p>환불은 아트머그 규정을 따라요. 시안 작업이 시작된 뒤에는 환불이 어려울 수 있어요.</p>
       </details>
       <details>
-        <summary>저작권 · 포트폴리오</summary>
-        <p>디자인 저작권은 tokpi에 있어요. 완성작은 tokpi 포트폴리오로 공개할 수 있어요.</p>
+        <summary>이용 범위</summary>
+        <ul>
+          <li>신청하신 분의 방송 채널 하나에서 쓸 수 있어요. 수익이 나는 방송에서도 괜찮아요.</li>
+          <li>다른 분께 넘기기, 되팔기, 다시 배포하기는 안 돼요. CSS 코드를 다른 작업에 가져다 쓰거나 나눠 주는 것도 안 돼요.</li>
+          <li>기업·단체 방송은 쓰는 범위에 따라 따로 견적을 드려요.</li>
+        </ul>
       </details>
       <details>
-        <summary>지원 플랫폼</summary>
-        <p>위플랩 채팅창 기준으로 만들어요(치지직·SOOP 방송에서 사용). 다른 프로그램은 문의 때 먼저 알려 주세요.</p>
+        <summary>저작권 · 포트폴리오</summary>
+        <ul>
+          <li>디자인 저작권은 tokpi에 있어요. 완성작은 tokpi 포트폴리오로 공개할 수 있어요.</li>
+          <li>공개를 원하지 않으면 「포트폴리오 비공개」 옵션을 골라 주세요. 공개 시기만 늦추고 싶으면 신청 때 날짜를 알려 주세요.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>문의 방법</summary>
+        <p>결제 전에는 아트머그 「작가에게 문의」로만 이야기해요. 카카오톡·디스코드 같은 개인 연락처는 적지 말아 주세요(아트머그 규정).</p>
       </details>
     </div>
   </section>
@@ -164,7 +204,7 @@
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="config.js?v=2"></script>
-<script src="app.js?v=2"></script>
+<script src="config.js?v=3"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
