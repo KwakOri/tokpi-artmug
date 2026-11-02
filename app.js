@@ -153,7 +153,8 @@
   function shakeStage() {
     var st = $('#stage'), pop = $('#pop');
     st.classList.remove('is-shake');
-    pop.classList.remove('is-pop');
+    pop.classList.remove('is-pop', 'is-left');
+    if (Math.random() < .5) pop.classList.add('is-left'); /* 왼쪽 위·오른쪽 위 중 아무 데나 */
     void st.offsetWidth; /* 연달아 눌러도 처음부터 다시 흔들리게 */
     st.classList.add('is-shake');
     pop.classList.add('is-pop');

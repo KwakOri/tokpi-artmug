@@ -198,19 +198,21 @@ a.credit:hover b { text-decoration: underline; }
   58% { transform: translateX(-3px) rotate(-.5deg); }
   78% { transform: translateX(2px) rotate(.3deg); }
 }
-/* 옵션을 켜고 끌 때 미리보기 오른쪽 위 모서리에서 만화 같은 강조선이 팟 하고 튄다 */
+/* 옵션을 켜고 끌 때 미리보기 오른쪽 위(노랑) 또는 왼쪽 위(분홍) 모서리에서 만화 같은 강조선이 팟 하고 튄다 */
 .build-preview { position: relative; }
 .pop {
   position: absolute; top: -76px; right: -28px; z-index: 2; width: 116px; height: 87px;
-  pointer-events: none; opacity: 0; transform-origin: 40% 100%;
+  pointer-events: none; opacity: 0; transform-origin: 40% 100%; --tilt: 20deg;
+  fill: var(--yellow); stroke: #f39a1e;
 }
+.pop.is-left { right: auto; left: -28px; transform-origin: 60% 100%; --tilt: -20deg; fill: #ff9cc2; stroke: #e8508a; }
 .pop.is-pop { animation: pop-burst .7s cubic-bezier(.2,1.6,.4,1) forwards; }
 @keyframes pop-burst {
-  0% { opacity: 0; transform: rotate(20deg) scale(.2); }
-  30% { opacity: 1; transform: rotate(20deg) scale(1.15); }
-  45% { transform: rotate(20deg) scale(.95); }
-  75% { opacity: 1; transform: rotate(20deg) scale(1); }
-  100% { opacity: 0; transform: rotate(20deg) scale(1.08); }
+  0% { opacity: 0; transform: rotate(var(--tilt)) scale(.2); }
+  30% { opacity: 1; transform: rotate(var(--tilt)) scale(1.15); }
+  45% { transform: rotate(var(--tilt)) scale(.95); }
+  75% { opacity: 1; transform: rotate(var(--tilt)) scale(1); }
+  100% { opacity: 0; transform: rotate(var(--tilt)) scale(1.08); }
 }
 @media (prefers-reduced-motion: reduce) { .stage.is-shake, .pop.is-pop { animation: none; } }
 .stage iframe { position: absolute; left: 0; top: 0; width: 500px; height: 800px; border: 0; transform-origin: 0 0; pointer-events: none; }
