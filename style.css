@@ -198,25 +198,19 @@ a.credit:hover b { text-decoration: underline; }
   58% { transform: translateX(-3px) rotate(-.5deg); }
   78% { transform: translateX(2px) rotate(.3deg); }
 }
-/* 켜면 「팟!」, 끄면 「쏙!」 만화 표시가 오른쪽 위에 튀어나왔다 사라진다 */
+/* 옵션을 켜고 끌 때 미리보기 오른쪽 위 모서리에서 만화 같은 강조선이 팟 하고 튄다 */
+.build-preview { position: relative; }
 .pop {
-  position: absolute; top: 18px; right: 18px; z-index: 2; display: grid; place-items: center;
-  width: 112px; height: 112px; pointer-events: none; opacity: 0;
-  font: 400 30px/1 var(--display); color: var(--ink);
-  filter: drop-shadow(0 0 1.5px var(--ink)) drop-shadow(0 0 1px var(--ink)) drop-shadow(4px 4px 0 var(--ink));
+  position: absolute; top: -76px; right: -28px; z-index: 2; width: 116px; height: 87px;
+  pointer-events: none; opacity: 0; transform-origin: 40% 100%;
 }
-.pop::before {
-  content: ''; position: absolute; inset: 0; z-index: -1; background: var(--yellow);
-  clip-path: polygon(50% 0, 61% 22%, 85% 8%, 79% 33%, 100% 38%, 81% 54%, 96% 76%, 71% 74%, 66% 100%, 50% 82%, 34% 100%, 29% 74%, 4% 76%, 19% 54%, 0 38%, 21% 33%, 15% 8%, 39% 22%);
-}
-.pop.is-off::before { background: var(--lilac); }
 .pop.is-pop { animation: pop-burst .7s cubic-bezier(.2,1.6,.4,1) forwards; }
 @keyframes pop-burst {
-  0% { opacity: 0; transform: scale(.2) rotate(-25deg); }
-  30% { opacity: 1; transform: scale(1.15) rotate(8deg); }
-  45% { transform: scale(.95) rotate(4deg); }
-  75% { opacity: 1; transform: scale(1) rotate(6deg); }
-  100% { opacity: 0; transform: scale(1.1) rotate(6deg); }
+  0% { opacity: 0; transform: rotate(20deg) scale(.2); }
+  30% { opacity: 1; transform: rotate(20deg) scale(1.15); }
+  45% { transform: rotate(20deg) scale(.95); }
+  75% { opacity: 1; transform: rotate(20deg) scale(1); }
+  100% { opacity: 0; transform: rotate(20deg) scale(1.08); }
 }
 @media (prefers-reduced-motion: reduce) { .stage.is-shake, .pop.is-pop { animation: none; } }
 .stage iframe { position: absolute; left: 0; top: 0; width: 500px; height: 800px; border: 0; transform-origin: 0 0; pointer-events: none; }

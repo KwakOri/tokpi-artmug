@@ -147,13 +147,11 @@
     C.options.forEach(function (o) { inputs[o.id].checked = state[o.id]; });
     var visual = C.options.some(function (o) { return o.preview && (o.id === id || o.needs === id); });
     if (visual) sendPreview();
-    shakeStage(on);
+    shakeStage();
     render();
   }
-  function shakeStage(on) {
+  function shakeStage() {
     var st = $('#stage'), pop = $('#pop');
-    pop.textContent = on ? '팟!' : '쏙!';
-    pop.classList.toggle('is-off', !on);
     st.classList.remove('is-shake');
     pop.classList.remove('is-pop');
     void st.offsetWidth; /* 연달아 눌러도 처음부터 다시 흔들리게 */
