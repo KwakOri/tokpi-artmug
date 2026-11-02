@@ -13,20 +13,31 @@ window.TOKPI_CONFIG = {
     days: 7,
   },
   /*
-   * preview: 켜고 끌 때 미리보기(assets/live/miruru.html)에 넘기는 값. 없으면 「그 밖의 옵션」에 놓인다.
+   * preview: 켜고 끌 때 미리보기(assets/live/miruru.html)에 넘기는 값.
+   * design: true면 미리보기 값이 없어도 위쪽 「디자인 옵션」에 놓인다. preview도 design도 없으면 「그 밖의 옵션」.
    * kind: 'won'은 금액을 더하고, 'percent'는 나머지 합계에 비율을 더한다.
    * days: 작업 기간에 더할 날 수. half: true면 작업 기간을 절반으로.
    * needs: 이 옵션을 켜면 함께 켜지는 옵션.
    */
   options: [
-    { id: 'cards', label: '구독·후원 카드', note: '구독·후원이 오면 테마 카드로 떠요', preview: 'cards', on: true, kind: 'won', value: 30000, days: 0 },
-    { id: 'roles', label: '스트리머·구독자 채팅 따로', note: '역할마다 이름표와 말풍선이 달라요', preview: 'roles', on: true, kind: 'won', value: 30000, days: 3 },
-    { id: 'fx', label: '구독·후원 화려한 연출', note: '쾅 떨어지고 반짝이며 등장해요', preview: 'fx', needs: 'cards', kind: 'won', value: 20000, days: 2 },
-    { id: 'tiers', label: '금액별 후원 카드', note: '1만·10만·100만 원 이상 후원마다 카드가 달라져요', needs: 'cards', kind: 'won', value: 30000, days: 2 },
-    { id: 'random', label: '랜덤 디자인', note: '채팅·구독·후원 카드가 2~3가지 디자인 중 무작위로 떠요', kind: 'won', value: 20000, days: 2 },
+    { id: 'cards', label: '구독·후원 카드', note: '테마 카드로 알림', preview: 'cards', on: true, kind: 'won', value: 30000, days: 0 },
+    { id: 'roles', label: '역할별 채팅', note: '스트리머·구독자 따로', preview: 'roles', on: true, kind: 'won', value: 30000, days: 3 },
+    { id: 'fx', label: '화려한 연출', note: '구독·후원 카드 등장 효과', preview: 'fx', needs: 'cards', kind: 'won', value: 20000, days: 2 },
+    { id: 'tiers', label: '금액별 후원 카드', note: '1만·10만·100만 원 이상', design: true, needs: 'cards', kind: 'won', value: 30000, days: 2 },
+    { id: 'random', label: '랜덤 디자인', note: '2~3가지 중 무작위', design: true, kind: 'won', value: 20000, days: 2 },
     { id: 'rush', label: '빠른 마감', note: '작업 기간 절반', kind: 'percent', value: 50, half: true },
-    { id: 'private', label: '포트폴리오 비공개', note: '완성작을 공개하지 않아요', kind: 'won', value: 20000 },
+    { id: 'private', label: '포트폴리오 비공개', note: '완성작 비공개', kind: 'won', value: 20000 },
   ],
+  /*
+   * credits: 미리보기 갤러리 카드(index.html data-bg) 아래에 붙는 버튜버 정보.
+   * name만 있으면 이름만, x(트위터 주소)가 있으면 누르면 새 탭으로 열린다. avatar는 assets/ 아래 정사각형 이미지(없으면 생략).
+   * 항목이 없는 카드는 빈 줄로 높이만 맞춘다.
+   */
+  credits: {
+    witch: null,
+    ghost: null,
+    miruru: { name: '미루루', x: null, avatar: null },
+  },
   /*
    * 슬롯: 구글 시트 「공개」 탭을 웹에 CSV로 게시한 주소(파일 > 공유 > 웹에 게시 > 공개 탭 · CSV).
    * 칸: 월(2026-11) | 전체 | 예약 | 상태(열림·마감·오픈 예정·휴식) | 안내. 틀은 sheets/slots-public.csv.

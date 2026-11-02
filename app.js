@@ -74,6 +74,20 @@
 
   /* ---------- 미리보기 갤러리 ---------- */
   var gallery = $('#gallery');
+  var esc = function (t) { return String(t).replace(/[&<>"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }); };
+  $$('.chat-card', gallery).forEach(function (card) {
+    var c = (C.credits || {})[card.getAttribute('data-bg')];
+    var cap = document.createElement(c && c.x ? 'a' : 'span');
+    cap.className = 'credit';
+    if (c) {
+      if (c.x) { cap.href = c.x; cap.target = '_blank'; cap.rel = 'noopener'; cap.setAttribute('aria-label', c.name + ' 트위터(새 탭)'); }
+      cap.innerHTML = (c.avatar ? '<img src="' + esc(c.avatar) + '" alt="" width="28" height="28">' : '') +
+        '<b>' + esc(c.name) + '</b>' + (c.x ? '<i class="credit-x" aria-hidden="true">𝕏</i>' : '');
+    }
+    var fc = document.createElement('figcaption');
+    fc.appendChild(cap);
+    card.appendChild(fc);
+  });
   function fitPreviews() {
     gallery.classList.toggle('is-scroll', gallery.scrollWidth > gallery.clientWidth + 1);
   }
@@ -102,13 +116,13 @@
   C.options.forEach(function (o) {
     var l = document.createElement('label');
     l.className = 'opt';
-    l.innerHTML = '<span class="opt-text"><b>' + o.label + '</b><small>' + o.note + '</small></span>' +
-      '<em class="opt-price">' + optPrice(o) + '</em><span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
+    l.innerHTML = '<span class="opt-text"><span class="opt-head"><b>' + o.label + '</b><em class="opt-price">' + optPrice(o) + '</em></span><small>' + o.note + '</small></span>' +
+      '<span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
     var input = l.querySelector('input');
     input.checked = state[o.id];
     input.addEventListener('change', function () { setOpt(o.id, input.checked); });
     inputs[o.id] = input;
-    $(o.preview ? '#visualOpts' : '#extraOpts').appendChild(l);
+    $(o.preview || o.design ? '#visualOpts' : '#extraOpts').appendChild(l);
   });
 
   function setOpt(id, on) {
