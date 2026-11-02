@@ -147,7 +147,14 @@
     C.options.forEach(function (o) { inputs[o.id].checked = state[o.id]; });
     var visual = C.options.some(function (o) { return o.preview && (o.id === id || o.needs === id); });
     if (visual) sendPreview();
+    shakeStage();
     render();
+  }
+  function shakeStage() {
+    var st = $('#stage');
+    st.classList.remove('is-shake');
+    void st.offsetWidth; /* 연달아 눌러도 처음부터 다시 흔들리게 */
+    st.classList.add('is-shake');
   }
 
   function chosenOpts() {
