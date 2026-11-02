@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css">
-<link rel="stylesheet" href="style.css?v=16">
+<link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
 <div class="page" id="top">
@@ -31,6 +31,7 @@
     <span class="spark s1">✦</span><span class="spark s2">✦</span><span class="spark s3">✧</span>
     <div class="hero-copy">
       <span class="badge">스트리머를 위한 채팅창 스튜디오</span>
+      <a class="promo" id="promoHero" href="#price" data-go="price" hidden><span class="promo-tag" data-promo="tag"></span><b data-promo="title"></b><small data-promo="note"></small></a>
       <h1>우리 방송만의<br><span class="hl">채팅창</span>, 주문제작</h1>
       <p class="lead">로고와 캐릭터, 방송 색을 담아<br class="br-m"> 방송 화면에 바로 쓰는 채팅창을 만들어 드려요.</p>
       <ul class="tags">
@@ -95,7 +96,8 @@
         <h3 class="panel-h">그 밖의 옵션</h3>
         <div class="opt-list" id="extraOpts"></div>
         <div class="estimate-sum">
-          <span class="sum-label">예상 견적</span>
+          <span class="sum-label">예상 견적 <span class="sum-promo" id="sumPromo" hidden></span></span>
+          <s class="sum-was" id="sumWas" hidden></s>
           <strong id="sumPrice">가격 준비 중</strong>
           <p class="sum-note">최종 금액은 아트머그 결제 화면 기준이에요.</p>
         </div>
@@ -227,7 +229,7 @@
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="config.js?v=10"></script>
-<script src="app.js?v=11"></script>
+<script src="config.js?v=11"></script>
+<script src="app.js?v=12"></script>
 </body>
 </html>

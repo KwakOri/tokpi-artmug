@@ -349,6 +349,29 @@ a.credit:hover b { text-decoration: underline; }
 .slot-badge.is-full::before { background: var(--orange); box-shadow: 0 0 0 3px #ffe0c7; }
 [hidden] { display: none !important; }
 
+/* 기간 한정 할인 */
+.promo {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; width: fit-content; max-width: 100%;
+  margin: 18px 0 0; padding: 12px 20px; text-decoration: none; color: var(--ink);
+  background: var(--orange); border: var(--line); border-radius: 18px; box-shadow: var(--shadow);
+  transform: rotate(-1.5deg); transition: transform .12s;
+}
+.promo:hover { transform: rotate(-1.5deg) translate(-2px, -2px); }
+.promo-tag { font-size: 13px; font-weight: 700; background: var(--ink); color: var(--yellow); border-radius: 999px; padding: 3px 10px; }
+.promo b { font-family: var(--display); font-weight: 400; font-size: 26px; line-height: 1.2; color: var(--paper); -webkit-text-stroke: 1px var(--ink); paint-order: stroke fill; text-shadow: 2px 2px 0 var(--ink); }
+.promo small { flex-basis: 100%; font-size: 14px; font-weight: 600; }
+.base-price s, .sum-was { color: var(--muted); font-weight: 600; }
+.sum-was { color: var(--on-night); font-size: 16px; opacity: .8; }
+.sum-promo { margin-left: 6px; font-size: 12px; font-weight: 700; color: var(--ink); background: var(--orange); border-radius: 999px; padding: 2px 9px; }
+.pick-list li.is-promo { background: #ffe0c7; }
+.pick-list li.is-promo em { color: var(--orange); }
+.slot-sale {
+  display: block; width: fit-content; margin: 0 0 10px; rotate: -2deg;
+  font-weight: 700; font-size: 13px; color: var(--paper); background: var(--orange);
+  border: 2px solid var(--ink); border-radius: 999px; box-shadow: 2px 2px 0 var(--ink); padding: 2px 12px;
+}
+.slot.is-sale { background: #fff1e4; }
+
 /* ---------- tablet ---------- */
 @media (max-width: 980px) {
   .nav-links { display: none; }
@@ -356,6 +379,7 @@ a.credit:hover b { text-decoration: underline; }
   .hero { grid-template-columns: 1fr; padding: 28px 28px 52px; text-align: center; }
   .hero .tags, .hero-btns { justify-content: center; }
   .hero-art { width: 100%; max-width: 380px; margin: 0 auto; }
+  .promo { margin: 18px auto 0; justify-content: center; }
   .sec { padding: 64px 28px; }
   .build { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
   .build-preview { width: 100%; max-width: 340px; margin: 0 auto; }
@@ -372,6 +396,7 @@ a.credit:hover b { text-decoration: underline; }
   .nav { padding: 8px 10px; }
   .brand { font-size: 19px; }
   .hero h1 { font-size: 40px; }
+  .promo b { font-size: 22px; }
   .lead { font-size: 16px; }
   .br-m { display: inline; }
   .bubble { font-size: 13px; }

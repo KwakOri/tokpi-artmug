@@ -103,9 +103,20 @@
 
   $$('[data-revision]').forEach(function (el) { el.textContent = C.revision; });
 
+  /* 기간 한정 할인: config의 promo.month가 한국 시간으로 이번 달일 때만 켠다 */
+  var kstMonth = new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 7);
+  var promo = C.promo && C.promo.percent && (C.promo.month === kstMonth || /[?&]promo=1\b/.test(location.search)) ? C.promo : null;
+  var promoPrice = function (n) { return Math.round(n * (100 - promo.percent) / 10000) * 100; };
+  if (promo) {
+    $$('[data-promo]').forEach(function (el) { el.textContent = promo[el.getAttribute('data-promo')] || ''; });
+    $('#promoHero').hidden = false;
+    $('#sumPromo').textContent = promo.percent + '% 할인 적용';
+    $('#sumPromo').hidden = false;
+  }
+
   $('#baseName').textContent = C.base.name;
   $('#baseItems').innerHTML = C.base.items.concat(['수정 ' + C.revision + '회']).map(function (i) { return '<li>' + i + '</li>'; }).join('');
-  $('#basePrice').textContent = (C.base.price == null ? TBD : won(C.base.price)) + ' · 작업 기간 약 ' + C.base.days + '일';
+  $('#basePrice').innerHTML = (C.base.price == null ? TBD : promo ? '<s>' + won(C.base.price) + '</s> ' + won(promoPrice(C.base.price)) : won(C.base.price)) + ' · 작업 기간 약 ' + C.base.days + '일';
 
   function optPrice(o) {
     if (o.value == null) return TBD;
@@ -180,7 +191,11 @@
       if (o.kind === 'percent') pct += o.value; else total += o.value;
     });
     if (total != null) total += Math.round(total * pct / 100);
+    var full = total;
+    if (promo && total != null) total = promoPrice(total);
     $('#sumPrice').textContent = total == null ? TBD : won(total);
+    $('#sumWas').textContent = full == null ? '' : won(full);
+    $('#sumWas').hidden = !promo || full == null;
 
     var days = C.base.days;
     opts.forEach(function (o) { days += o.days || 0; });
@@ -188,12 +203,14 @@
 
     var totalText = total == null ? TBD : won(total);
     var daysText = '작업 기간 약 ' + days + '일';
-    $('#pickList').innerHTML = pickRows(opts).map(function (r) {
-      return '<li' + (r.base ? ' class="is-base"' : '') + '><span><b>' + r.label + '</b>' + (r.sub ? '<small>' + r.sub + '</small>' : '') + '</span><em>' + r.price + '</em></li>';
+    var rows = pickRows(opts);
+    if (promo) rows.push({ promo: true, label: promo.tag + ' ' + promo.title, price: full == null ? '-' + promo.percent + '%' : '-' + won(full - total) });
+    $('#pickList').innerHTML = rows.map(function (r) {
+      return '<li' + (r.base ? ' class="is-base"' : r.promo ? ' class="is-promo"' : '') + '><span><b>' + r.label + '</b>' + (r.sub ? '<small>' + r.sub + '</small>' : '') + '</span><em>' + r.price + '</em></li>';
     }).join('');
     $('#pickPrice').textContent = '예상 ' + totalText;
     $('#pickDays').textContent = daysText;
-    picked = { rows: pickRows(opts), total: totalText, days: daysText };
+    picked = { rows: rows, total: totalText, days: daysText };
     sendHeight(false);
   }
 
@@ -247,7 +264,9 @@
     $('#slotList').innerHTML = list.map(function (s) {
       var dots = '';
       for (var i = 0; i < s.total; i++) dots += '<i class="' + (i < s.booked ? 'is-booked' : '') + '"></i>';
-      return '<article class="slot is-' + s.kind + '">' +
+      var sale = promo && s.month === promo.month && (s.kind === 'open' || s.kind === 'soon');
+      return '<article class="slot is-' + s.kind + (sale ? ' is-sale' : '') + '">' +
+        (sale ? '<span class="slot-sale">' + promo.tag + ' ' + promo.percent + '% 할인</span>' : '') +
         '<div class="slot-top"><h3>' + s.label + '</h3><span class="slot-pill">' + SLOT_PILL[s.kind](s) + '</span></div>' +
         (s.kind === 'off' ? '' : '<div class="slot-dots" aria-label="전체 ' + s.total + '자리 중 ' + s.booked + '자리 예약">' + dots + '</div>') +
         '<p class="slot-sub">' + (s.note || (s.kind === 'open' ? s.total + '자리 중 ' + s.booked + '자리 예약' : s.kind === 'off' ? '이달은 작업을 쉬어요' : '')) + '</p>' +
@@ -258,7 +277,7 @@
     sections = $$('.nav-links a').map(function (a) { return document.getElementById(a.getAttribute('data-go')); });
     var first = list.filter(function (s) { return s.kind === 'open'; })[0];
     var badge = $('#slotBadge');
-    badge.textContent = first ? first.label.replace(/<\/?small>/g, '').replace('년', '년 ') + ' 슬롯 ' + first.left + '자리 남음' : '이번 슬롯은 마감됐어요';
+    badge.textContent = first ? first.label.replace(/<\/?small>/g, '').replace('년', '년 ') + ' 슬롯 ' + first.left + '자리 남음' + (promo && first.month === promo.month ? ' · ' + promo.percent + '% 할인 중' : '') : '이번 슬롯은 마감됐어요';
     badge.classList.toggle('is-full', !first);
     badge.hidden = false;
     sendHeight(true);
