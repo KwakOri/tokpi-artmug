@@ -75,9 +75,6 @@
   /* ---------- 미리보기 갤러리 ---------- */
   var gallery = $('#gallery');
   function fitPreviews() {
-    $$('.chat-screen').forEach(function (box) {
-      box.querySelector('iframe').style.setProperty('--s', (box.clientWidth / 500).toFixed(4));
-    });
     gallery.classList.toggle('is-scroll', gallery.scrollWidth > gallery.clientWidth + 1);
   }
   if ('ResizeObserver' in window) new ResizeObserver(fitPreviews).observe(gallery);

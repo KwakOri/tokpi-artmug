@@ -159,16 +159,13 @@ p { margin: 0; }
 .chat-card:nth-child(odd) { transform: rotate(-1.5deg); }
 .chat-card:nth-child(even) { transform: rotate(1.5deg); }
 .chat-screen {
-  position: relative; aspect-ratio: 5 / 8; overflow: hidden;
+  position: relative; aspect-ratio: 9 / 16; overflow: hidden;
   border: var(--line); border-radius: 22px; box-shadow: 6px 6px 0 var(--ink);
   background: var(--night) center / cover no-repeat;
 }
 .chat-card[data-bg="witch"] .chat-screen { background-image: url(assets/backdrop-witch.jpg); }
 .chat-card[data-bg="ghost"] .chat-screen { background-image: url(assets/backdrop-ghost.jpg); }
-.chat-screen iframe {
-  position: absolute; top: 0; left: 0; border: 0; background: transparent;
-  transform-origin: 0 0; transform: scale(var(--s, .5));
-}
+.chat-screen video { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* tiers */
 .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
