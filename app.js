@@ -122,7 +122,7 @@
     input.checked = state[o.id];
     input.addEventListener('change', function () { setOpt(o.id, input.checked); });
     inputs[o.id] = input;
-    $(o.preview ? '#visualOpts' : '#extraOpts').appendChild(l);
+    $(o.preview || o.design ? '#visualOpts' : '#extraOpts').appendChild(l);
   });
 
   function setOpt(id, on) {
@@ -185,7 +185,6 @@
     var days = C.base.days;
     opts.forEach(function (o) { days += o.days || 0; });
     if (opts.some(function (o) { return o.half; })) days = Math.ceil(days / 2);
-    $('#sumDays').textContent = '작업 기간 약 ' + days + '일';
 
     var totalText = total == null ? TBD : won(total);
     var daysText = '작업 기간 약 ' + days + '일';
