@@ -14,8 +14,8 @@
   --muted: #3d3456;
   --on-night: #d9ccff;
   --dash: #d8ccf2;
-  --display: 'Bagel Fat One', 'IBM Plex Sans KR', sans-serif;
-  --body: 'IBM Plex Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  --display: 'Bagel Fat One', 'Paperlogy', sans-serif;
+  --body: 'Paperlogy', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --line: 3px solid var(--ink);
   --shadow: 5px 5px 0 var(--ink);
 }
