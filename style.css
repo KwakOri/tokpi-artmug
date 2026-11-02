@@ -200,7 +200,7 @@ a.credit:hover b { text-decoration: underline; }
 .base-box li::before { content: '✦'; position: absolute; left: 0; color: var(--purple); }
 .base-price { font-weight: 700; color: var(--purple); font-size: 15px; }
 .panel-h { font-size: 16px; margin: 10px 0 0; }
-.opt-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.opt-list { display: grid; gap: 10px; }
 .switch { position: relative; flex: none; width: 56px; height: 32px; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; inset: 0; transition: background .15s; background: var(--dash); border: var(--line); border-radius: 999px; cursor: pointer; }
@@ -213,14 +213,13 @@ a.credit:hover b { text-decoration: underline; }
 
 .opt {
   display: flex; gap: 12px; align-items: center; justify-content: space-between; cursor: pointer;
-  border: 2px solid var(--ink); border-radius: 16px; padding: 9px 10px 9px 12px; background: var(--cream);
+  border: 2px solid var(--ink); border-radius: 16px; padding: 10px 12px 10px 14px; background: var(--cream);
   transition: background .15s;
 }
-.opt-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 8px; }
-.opt b { font-size: 15px; line-height: 1.35; }
+.opt b { display: block; font-size: 15px; }
 .opt-text { flex: 1; min-width: 0; }
-.opt-price { font-style: normal; font-weight: 700; font-size: 14px; line-height: 1.35; color: var(--purple); white-space: nowrap; }
-.opt small { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.35; }
+.opt-price { flex: none; font-style: normal; font-weight: 700; font-size: 15px; color: var(--purple); white-space: nowrap; }
+.opt small { color: var(--muted); font-size: 13px; }
 .opt:has(input:checked) { background: var(--lilac); }
 .opt .switch { width: 50px; height: 28px; }
 .opt .slider::before { width: 16px; height: 16px; }
@@ -383,7 +382,6 @@ a.credit:hover b { text-decoration: underline; }
   .build-preview { max-width: 280px; }
   .steps { grid-template-columns: 1fr; }
   .chat-card { width: 220px; }
-  .opt-list { grid-template-columns: 1fr; }
   .order { grid-template-columns: 1fr; padding: 22px 18px; }
   .closing { flex-direction: column; text-align: center; padding: 40px 20px; }
   .closing img { width: 140px; }

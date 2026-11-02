@@ -116,13 +116,13 @@
   C.options.forEach(function (o) {
     var l = document.createElement('label');
     l.className = 'opt';
-    l.innerHTML = '<span class="opt-text"><span class="opt-head"><b>' + o.label + '</b><em class="opt-price">' + optPrice(o) + '</em></span><small>' + o.note + '</small></span>' +
-      '<span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
+    l.innerHTML = '<span class="opt-text"><b>' + o.label + '</b><small>' + o.note + '</small></span>' +
+      '<em class="opt-price">' + optPrice(o) + '</em><span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
     var input = l.querySelector('input');
     input.checked = state[o.id];
     input.addEventListener('change', function () { setOpt(o.id, input.checked); });
     inputs[o.id] = input;
-    $(o.preview || o.design ? '#visualOpts' : '#extraOpts').appendChild(l);
+    $(o.preview ? '#visualOpts' : '#extraOpts').appendChild(l);
   });
 
   function setOpt(id, on) {
