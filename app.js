@@ -116,7 +116,7 @@
 
   $('#baseName').textContent = C.base.name;
   $('#baseItems').innerHTML = C.base.items.concat(['수정 ' + C.revision + '회']).map(function (i) { return '<li>' + i + '</li>'; }).join('');
-  $('#basePrice').innerHTML = (C.base.price == null ? TBD : promo ? '<s>' + won(C.base.price) + '</s> ' + won(promoPrice(C.base.price)) : won(C.base.price)) + ' · 작업 기간 약 ' + C.base.days + '일';
+  $('#basePrice').innerHTML = (C.base.price == null ? TBD : promo ? '<s>' + won(C.base.price) + '</s> ' + won(promoPrice(C.base.price)) : won(C.base.price));
 
   function optPrice(o) {
     if (o.value == null) return TBD;
