@@ -33,7 +33,7 @@ window.TOKPI_CONFIG = {
    * csvUrl이 null이면 슬롯 칸을 숨긴다. 주소 뒤에 ?slots=demo를 붙이면 demo 값으로 미리 본다.
    */
   slots: {
-    csvUrl: null,
+    csvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRfOQZAUdLV_YBIPJfDo_mSihbFFUB9Y6ku3_BXrHWapuYBOV1KFnE-m7u4C6RfoCQcHszPV9UZftb/pub?gid=853614306&single=true&output=csv',
     months: 3,
     demo: [
       ['2026-11', 5, 5, '열림', ''],
