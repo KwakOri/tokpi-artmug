@@ -151,6 +151,12 @@
   window.addEventListener('resize', fitStage);
   fitStage();
 
+  var picked = null;
+  function pickRows(opts) {
+    var rows = [{ base: true, label: C.base.name, sub: C.base.items.concat(['수정 ' + C.revision + '회']).join(' · '), price: C.base.price == null ? TBD : won(C.base.price) }];
+    return rows.concat(opts.map(function (o) { return { label: o.label, price: optPrice(o) }; }));
+  }
+
   function render() {
     var opts = chosenOpts();
     var total = C.base.price;
@@ -167,7 +173,14 @@
     if (opts.some(function (o) { return o.half; })) days = Math.ceil(days / 2);
     $('#sumDays').textContent = '작업 기간 약 ' + days + '일';
 
-    $('#optsField').value = [C.base.name].concat(opts.map(function (o) { return o.label; })).join(' + ');
+    var totalText = total == null ? TBD : won(total);
+    var daysText = '작업 기간 약 ' + days + '일';
+    $('#pickList').innerHTML = pickRows(opts).map(function (r) {
+      return '<li' + (r.base ? ' class="is-base"' : '') + '><span><b>' + r.label + '</b>' + (r.sub ? '<small>' + r.sub + '</small>' : '') + '</span><em>' + r.price + '</em></li>';
+    }).join('');
+    $('#pickPrice').textContent = '예상 ' + totalText;
+    $('#pickDays').textContent = daysText;
+    picked = { rows: pickRows(opts), total: totalText, days: daysText };
     sendHeight(false);
   }
 
@@ -197,8 +210,11 @@
       '[tokpi 채팅창 주문제작 신청]',
       '채널 이름: ' + v('channel'),
       '방송 플랫폼: ' + v('platform'),
-      '구성: ' + v('opts'),
+      '',
+      '[고른 구성]',
     ];
+    picked.rows.forEach(function (r) { lines.push('- ' + r.label + (r.sub ? ' (' + r.sub + ')' : '') + ' ' + r.price); });
+    lines.push('예상 견적: ' + picked.total + ' · ' + picked.days, '');
     lines.push(
       '원하는 분위기: ' + v('mood'),
       '메인 색: ' + v('color'),

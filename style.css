@@ -337,3 +337,18 @@ p { margin: 0; }
   .closing img { width: 140px; }
   .closing h2 { font-size: 28px; }
 }
+
+/* 신청 양식: 고른 구성 */
+.pick { background: var(--lilac-bg); border: 2px solid var(--ink); border-radius: 18px; padding: 14px 18px; }
+.pick-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.pick-head > span { font-weight: 700; font-size: 15px; }
+.pick-edit { font-size: 13px; font-weight: 700; color: var(--purple); text-decoration: none; background: var(--paper); border: 2px solid var(--ink); border-radius: 999px; padding: 3px 12px; }
+.pick-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.pick-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--paper); border: 2px solid var(--ink); border-radius: 12px; padding: 8px 12px; }
+.pick-list li.is-base { background: var(--yellow); }
+.pick-list b { display: block; font-size: 15px; }
+.pick-list small { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+.pick-list em { font-style: normal; font-weight: 700; white-space: nowrap; }
+.pick-sum { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 10px; padding-top: 10px; border-top: 2px dashed var(--purple); }
+.pick-sum span { font-size: 14px; color: var(--muted); }
+.pick-sum strong { font-size: 20px; }

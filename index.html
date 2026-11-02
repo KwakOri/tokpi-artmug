@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=10">
+<link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
 <div class="page" id="top">
@@ -78,7 +78,7 @@
         <div class="stage" id="stage">
           <iframe id="liveFrame" title="채팅창 미리보기" loading="lazy" tabindex="-1" scrolling="no"></iframe>
         </div>
-        <p class="stage-note">예시 디자인(미루루)이에요. 실제 작업은 채널 분위기에 맞춰 새로 만들어요.</p>
+        <p class="stage-note">모델 제공해주신 미루루님 감사합니다!</p>
       </div>
       <div class="build-panel">
         <div class="base-box">
@@ -189,6 +189,11 @@
       <p>칸을 채우고 「양식 복사」를 누른 뒤, 아트머그 문의 창에 붙여 넣어 주세요.</p>
     </div>
     <form class="order" id="orderForm" autocomplete="off">
+      <div class="pick wide">
+        <div class="pick-head"><span>고른 구성</span><a href="#price" class="pick-edit" data-go="price">구성 바꾸기 ↑</a></div>
+        <ul class="pick-list" id="pickList"></ul>
+        <div class="pick-sum"><span id="pickDays"></span><strong id="pickPrice"></strong></div>
+      </div>
       <label><span>채널 이름</span><input name="channel" placeholder="예) 오늘도 방송국"></label>
       <label><span>방송 플랫폼</span>
         <select name="platform"><option>위플랩 (치지직)</option><option>위플랩 (SOOP)</option><option>기타 (문의 때 알려 주세요)</option></select>
@@ -199,7 +204,6 @@
         <select name="assets"><option>둘 다 있어요</option><option>로고만 있어요</option><option>캐릭터만 있어요</option><option>없어요</option></select>
       </label>
       <label class="wide"><span>참고 자료</span><textarea name="refs" rows="3" placeholder="좋아하는 채팅창이나 분위기를 글로 적어 주세요. 이미지는 아트머그 문의에 첨부해 주세요."></textarea></label>
-      <label class="wide"><span>고른 구성</span><input name="opts" id="optsField" readonly placeholder="위 「구성·가격」에서 고른 옵션이 들어가요"></label>
       <div class="order-foot wide">
         <button type="button" class="btn btn-ink" id="copyBtn">양식 복사</button>
         <span class="order-hint">개인 연락처는 적지 마세요. 아트머그 문의로만 이야기해요.</span>
@@ -210,7 +214,7 @@
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="config.js?v=4"></script>
-<script src="app.js?v=4"></script>
+<script src="config.js?v=5"></script>
+<script src="app.js?v=5"></script>
 </body>
 </html>
