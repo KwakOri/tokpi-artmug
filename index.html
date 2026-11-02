@@ -7,14 +7,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 <div class="page" id="top">
 
   <nav class="nav" id="nav" aria-label="페이지 메뉴">
     <div class="nav-inner">
-      <a class="brand" href="#top" data-go="top"><img src="assets/logo.svg" alt="" width="30" height="30"><span>tokpi</span></a>
+      <a class="brand" href="#top" data-go="top"><span>Tokpi</span></a>
       <div class="nav-links">
         <a href="#preview" data-go="preview">미리보기</a>
         <a href="#price" data-go="price">가격</a>
@@ -40,35 +40,29 @@
       </div>
     </div>
     <div class="hero-art">
-      <div class="bubble b1">안녕하세요~! 👋</div>
       <div class="bubble b2">채팅창 너무 귀여워요</div>
       <div class="bubble b3">구독 감사합니다 ♥</div>
-      <img src="assets/mascot-maker.webp" alt="채팅창을 만드는 tokpi 마스코트" width="640" height="640">
+      <div class="hero-pic">
+        <img src="assets/mascot-maker.webp" alt="채팅창을 만드는 tokpi 마스코트" width="640" height="640">
+        <span class="say">안녕하세요~!</span>
+      </div>
     </div>
   </header>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>CHAT BOX STUDIO ✦ 채팅창 주문제작 ✦ 위플랩 · 치지직 · SOOP ✦ 시안 1개 + 수정 1회 ✦ </span>
-      <span>CHAT BOX STUDIO ✦ 채팅창 주문제작 ✦ 위플랩 · 치지직 · SOOP ✦ 시안 1개 + 수정 1회 ✦ </span>
-    </div>
-  </div>
 
   <section class="sec" id="preview">
     <div class="sec-head">
       <span class="kicker">PREVIEW</span>
-      <h2>방송 화면에서는 이렇게 움직여요</h2>
-      <p>tokpi가 만든 채팅창이에요. 실제 방송처럼 채팅이 올라와요.</p>
     </div>
     <div class="gallery" id="gallery">
       <figure class="chat-card" data-bg="witch">
-        <div class="chat-screen"><video autoplay muted loop playsinline preload="auto" poster="assets/video/witch.jpg" aria-label="마녀 채팅창 미리보기"><source src="assets/video/witch.webm" type="video/webm"><source src="assets/video/witch.mp4" type="video/mp4"></video></div>
+        <div class="chat-screen"><video autoplay muted loop playsinline preload="auto" poster="assets/video/witch.jpg?v=6" aria-label="마녀 채팅창 미리보기"><source src="assets/video/witch.webm?v=6" type="video/webm"><source src="assets/video/witch.mp4?v=6" type="video/mp4"></video></div>
       </figure>
       <figure class="chat-card" data-bg="ghost">
-        <div class="chat-screen"><video autoplay muted loop playsinline preload="auto" poster="assets/video/ghost.jpg" aria-label="유령 채팅창 미리보기"><source src="assets/video/ghost.webm" type="video/webm"><source src="assets/video/ghost.mp4" type="video/mp4"></video></div>
+        <div class="chat-screen"><video autoplay muted loop playsinline preload="auto" poster="assets/video/ghost.jpg?v=6" aria-label="유령 채팅창 미리보기"><source src="assets/video/ghost.webm?v=6" type="video/webm"><source src="assets/video/ghost.mp4?v=6" type="video/mp4"></video></div>
       </figure>
       <figure class="chat-card" data-bg="miruru">
-        <div class="chat-screen"><video autoplay muted loop playsinline preload="auto" poster="assets/video/miruru.jpg" aria-label="미루루 채팅창 미리보기"><source src="assets/video/miruru.webm" type="video/webm"><source src="assets/video/miruru.mp4" type="video/mp4"></video></div>
+        <div class="chat-screen"><video autoplay muted loop playsinline preload="auto" poster="assets/video/miruru.jpg?v=6" aria-label="미루루 채팅창 미리보기"><source src="assets/video/miruru.webm?v=6" type="video/webm"><source src="assets/video/miruru.mp4?v=6" type="video/mp4"></video></div>
       </figure>
     </div>
   </section>
@@ -76,8 +70,6 @@
   <section class="sec sec-lilac" id="price">
     <div class="sec-head">
       <span class="kicker">PRICE</span>
-      <h2>단계를 골라 주세요</h2>
-      <p>모든 단계에 시안 1개와 수정 <span data-revision>1</span>회가 들어 있어요.</p>
     </div>
     <div class="tiers" id="tiers"></div>
     <div class="omakase" id="omakaseBox" hidden>
@@ -169,17 +161,6 @@
     </form>
   </section>
 
-  <section class="closing">
-    <img src="assets/mascot-hello.webp" alt="" width="640" height="640">
-    <div>
-      <h2>나만의 채팅창이 필요하다면?</h2>
-      <a class="btn btn-ink" href="#form" data-go="form">신청 양식 쓰러 가기</a>
-    </div>
-  </section>
-
-  <footer class="foot">
-    <img src="assets/logo.svg" alt="" width="26" height="26"><span>tokpi · 스트리머를 위한 채팅창 스튜디오</span>
-  </footer>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>

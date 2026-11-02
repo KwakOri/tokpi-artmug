@@ -108,13 +108,17 @@ p { margin: 0; }
 .tags li:nth-child(even) { transform: rotate(2deg); background: var(--lilac-bg); }
 .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; }
 .hero-art { position: relative; }
-.hero-art img { width: 100%; max-width: 440px; margin: 0 auto; }
+.hero-pic { position: relative; max-width: 440px; margin: 0 auto; container-type: inline-size; }
+.hero-pic img { width: 100%; }
+.say {
+  position: absolute; left: 29.5%; top: 29.5%; translate: -50% -50%; rotate: -7deg;
+  font-family: var(--display); font-size: 6.8cqw; white-space: nowrap; color: var(--ink);
+}
 .bubble {
   position: absolute; z-index: 2; font-weight: 600; font-size: 15px; white-space: nowrap;
   background: var(--paper); border: var(--line); border-radius: 18px; box-shadow: 3px 3px 0 var(--ink);
   padding: 8px 14px; animation: bob 3.2s ease-in-out infinite;
 }
-.b1 { top: 6%; left: -4%; transform: rotate(-4deg); }
 .b2 { top: 3%; right: 0; background: var(--yellow); animation-delay: -1s; }
 .b3 { bottom: 8%; left: 4%; background: var(--lilac); animation-delay: -2s; }
 @keyframes bob { 50% { translate: 0 -8px; } }
@@ -315,7 +319,7 @@ p { margin: 0; }
   .nav-cta { margin-left: auto; }
   .hero { grid-template-columns: 1fr; padding: 28px 28px 52px; text-align: center; }
   .hero .tags, .hero-btns { justify-content: center; }
-  .hero-art { max-width: 380px; margin: 0 auto; }
+  .hero-art { width: 100%; max-width: 380px; margin: 0 auto; }
   .sec { padding: 64px 28px; }
   .tiers { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
   .estimate { grid-template-columns: 1fr; }
