@@ -12,7 +12,7 @@
     가격과 작업 기간은 상품 정보를 확인해 주세요.
   </div>
   <div name="stage">
-    <iframe src="https://kwakori.github.io/tokpi-artmug/?v=1" width="1180" height="760" scrolling="no" frameborder="0" allow="clipboard-write" title="tokpi 채팅창 주문제작" style="display:block;width:100%;max-width:1180px;height:760px;border:0;margin:0 auto;"></iframe>
+    <iframe src="https://kwakori.github.io/tokpi-artmug/?v=2" width="1180" height="760" scrolling="no" frameborder="0" allow="clipboard-write" title="tokpi 채팅창 주문제작" style="display:block;width:100%;max-width:1180px;height:760px;border:0;margin:0 auto;"></iframe>
   </div>
 </section>
 ```

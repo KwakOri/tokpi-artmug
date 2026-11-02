@@ -81,82 +81,97 @@
   window.addEventListener('resize', fitPreviews);
   fitPreviews();
 
-  /* ---------- 가격·견적 ---------- */
+  /* ---------- 구성·가격: 기본 구성 + 옵션, 왼쪽 미리보기 ---------- */
   var won = function (n) { return n.toLocaleString('ko-KR') + '원'; };
-  var state = { tier: 'standard', omakase: false, opts: {} };
+  var TBD = '가격 준비 중';
+  var state = {};
+  C.options.forEach(function (o) { state[o.id] = !!o.on; });
 
   $$('[data-revision]').forEach(function (el) { el.textContent = C.revision; });
 
-  var tiersEl = $('#tiers');
-  var tierSelect = $('#tierSelect');
-  C.tiers.forEach(function (t) {
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'tier';
-    b.setAttribute('data-tier', t.id);
-    b.innerHTML =
-      (t.badge ? '<span class="tier-badge">' + t.badge + '</span>' : '') +
-      '<h3>' + t.name + '</h3>' +
-      '<p class="tier-sum">' + t.summary + '</p>' +
-      '<p class="tier-price' + (t.price == null ? ' tbd' : '') + '">' + (t.price == null ? '가격 준비 중' : won(t.price)) + '</p>' +
-      '<p class="tier-days">작업 기간 약 ' + t.days + '일</p>' +
-      '<ul>' + t.items.concat(['수정 ' + C.revision + '회']).map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>';
-    b.addEventListener('click', function () { state.tier = t.id; render(); });
-    tiersEl.appendChild(b);
+  $('#baseName').textContent = C.base.name;
+  $('#baseItems').innerHTML = C.base.items.concat(['수정 ' + C.revision + '회']).map(function (i) { return '<li>' + i + '</li>'; }).join('');
+  $('#basePrice').textContent = (C.base.price == null ? TBD : won(C.base.price)) + ' · 작업 기간 약 ' + C.base.days + '일';
 
-    var o = document.createElement('option');
-    o.value = t.id;
-    o.textContent = t.name + ' — ' + t.items.join(', ');
-    tierSelect.appendChild(o);
-  });
-  tierSelect.addEventListener('change', function () { state.tier = tierSelect.value; render(); });
-
-  if (C.showOmakase) {
-    $('#omakaseBox').hidden = false;
-    $('#omakase').addEventListener('change', function (e) { state.omakase = e.target.checked; render(); });
+  function optPrice(o) {
+    if (o.value == null) return TBD;
+    return o.kind === 'percent' ? '+' + o.value + '%' : '+' + won(o.value);
   }
 
-  var optsEl = $('#options');
+  var inputs = {};
   C.options.forEach(function (o) {
     var l = document.createElement('label');
     l.className = 'opt';
-    var price = o.value == null ? '가격 준비 중' : (o.kind === 'percent' ? '+' + o.value + '%' : '+' + won(o.value));
-    l.innerHTML = '<span><b>' + o.label + '</b><small>' + o.note + ' · ' + price + '</small></span>' +
+    l.innerHTML = '<span><b>' + o.label + '</b><small>' + o.note + ' · ' + optPrice(o) + (o.days ? ' · +' + o.days + '일' : '') + '</small></span>' +
       '<span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
-    l.querySelector('input').addEventListener('change', function (e) { state.opts[o.id] = e.target.checked; render(); });
-    optsEl.appendChild(l);
+    var input = l.querySelector('input');
+    input.checked = state[o.id];
+    input.addEventListener('change', function () { setOpt(o.id, input.checked); });
+    inputs[o.id] = input;
+    $(o.preview ? '#visualOpts' : '#extraOpts').appendChild(l);
   });
 
-  function currentTier() {
-    return C.tiers.filter(function (t) { return t.id === state.tier; })[0];
+  function setOpt(id, on) {
+    state[id] = on;
+    C.options.forEach(function (o) {
+      if (on && o.id === id && o.needs) state[o.needs] = true;
+      if (!on && o.needs === id) state[o.id] = false;
+    });
+    C.options.forEach(function (o) { inputs[o.id].checked = state[o.id]; });
+    var visual = C.options.some(function (o) { return o.preview && (o.id === id || o.needs === id); });
+    if (visual) sendPreview();
+    render();
   }
+
   function chosenOpts() {
-    return C.options.filter(function (o) { return state.opts[o.id]; });
+    return C.options.filter(function (o) { return state[o.id]; });
   }
+
+  /* 미리보기 iframe: 500×800 화면을 칸 너비에 맞춰 줄인다 */
+  var stage = $('#stage');
+  var frame = $('#liveFrame');
+  var LIVE_W = 500, LIVE_H = 800;
+  function previewOpts() {
+    var p = {};
+    C.options.forEach(function (o) { if (o.preview) p[o.preview] = state[o.id]; });
+    return p;
+  }
+  function fitStage() {
+    var k = stage.clientWidth / LIVE_W;
+    frame.style.transform = 'scale(' + k + ')';
+    stage.style.height = Math.round(LIVE_H * k) + 'px';
+  }
+  function sendPreview() {
+    if (frame.contentWindow) frame.contentWindow.postMessage({ type: 'TOKPI_PREVIEW_OPTS', opts: previewOpts() }, '*');
+  }
+  var p0 = previewOpts();
+  frame.src = 'assets/live/miruru.html?v=1&' + Object.keys(p0).map(function (k) { return k + '=' + (p0[k] ? 1 : 0); }).join('&');
+  frame.addEventListener('load', sendPreview);
+  if ('ResizeObserver' in window) new ResizeObserver(fitStage).observe(stage);
+  window.addEventListener('resize', fitStage);
+  fitStage();
 
   function render() {
-    var t = currentTier();
-    $$('.tier').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-tier') === t.id); });
-    tierSelect.value = t.id;
-
-    var base = state.omakase ? t.omakase : t.price;
     var opts = chosenOpts();
-    var total = base;
+    var total = C.base.price;
+    var pct = 0;
     opts.forEach(function (o) {
       if (total == null || o.value == null) { total = null; return; }
-      total += o.kind === 'percent' ? Math.round(base * o.value / 100) : o.value;
+      if (o.kind === 'percent') pct += o.value; else total += o.value;
     });
-    $('#sumPrice').textContent = total == null ? '가격 준비 중' : won(total);
+    if (total != null) total += Math.round(total * pct / 100);
+    $('#sumPrice').textContent = total == null ? TBD : won(total);
 
-    var days = t.days;
-    if (state.opts.rush) days = Math.ceil(days / 2);
-    $('#sumDays').textContent = t.name + (state.omakase ? ' · 오마카세' : '') + ' · 작업 기간 약 ' + days + '일';
+    var days = C.base.days;
+    opts.forEach(function (o) { days += o.days || 0; });
+    if (opts.some(function (o) { return o.half; })) days = Math.ceil(days / 2);
+    $('#sumDays').textContent = '작업 기간 약 ' + days + '일';
 
-    $('#optsField').value = opts.map(function (o) { return o.label; }).join(', ');
+    $('#optsField').value = [C.base.name].concat(opts.map(function (o) { return o.label; })).join(' + ');
     sendHeight(false);
   }
 
-  $('#daysLine').textContent = '작업 기간 · ' + C.tiers.map(function (t) { return t.name + ' 약 ' + t.days + '일'; }).join(' / ') + ' (결제 후부터)';
+  $('#daysLine').textContent = '작업 기간 · ' + C.base.name + ' 약 ' + C.base.days + '일, 옵션에 따라 늘어나요 (결제 후부터)';
   render();
 
   /* ---------- 신청 양식 복사 ---------- */
@@ -178,16 +193,13 @@
   function buildText() {
     var f = $('#orderForm');
     var v = function (n) { return (f.elements[n].value || '').trim() || '-'; };
-    var t = currentTier();
     var lines = [
       '[tokpi 채팅창 주문제작 신청]',
       '채널 이름: ' + v('channel'),
       '방송 플랫폼: ' + v('platform'),
-      '단계: ' + t.name + ' (' + t.items.join(', ') + ')',
+      '구성: ' + v('opts'),
     ];
-    if (C.showOmakase) lines.push('오마카세: ' + (state.omakase ? '네' : '아니요'));
     lines.push(
-      '추가 옵션: ' + v('opts'),
       '원하는 분위기: ' + v('mood'),
       '메인 색: ' + v('color'),
       '로고·캐릭터: ' + v('assets'),

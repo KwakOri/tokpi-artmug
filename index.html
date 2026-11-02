@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=9">
+<link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
 <div class="page" id="top">
@@ -17,7 +17,7 @@
       <a class="brand" href="#top" data-go="top"><span>Tokpi</span></a>
       <div class="nav-links">
         <a href="#preview" data-go="preview">미리보기</a>
-        <a href="#price" data-go="price">가격</a>
+        <a href="#price" data-go="price">구성·가격</a>
         <a href="#process" data-go="process">진행</a>
         <a href="#notice" data-go="notice">주의사항</a>
       </div>
@@ -69,23 +69,34 @@
 
   <section class="sec sec-lilac" id="price">
     <div class="sec-head">
-      <span class="kicker">PRICE</span>
+      <span class="kicker">BUILD</span>
+      <h2>원하는 구성을 골라 보세요</h2>
+      <p>옵션을 켜고 끄면 왼쪽 미리보기가 바로 바뀌어요.</p>
     </div>
-    <div class="tiers" id="tiers"></div>
-    <div class="omakase" id="omakaseBox" hidden>
-      <label class="switch"><input type="checkbox" id="omakase"><span class="slider"></span></label>
-      <div><b>오마카세로 맡기기</b><p>시안 확인과 수정 없이 맡겨 주시면 완성본으로 드려요. 오류는 고쳐 드려요.</p></div>
-    </div>
-    <div class="estimate">
-      <div class="estimate-opts">
-        <h3>추가 옵션</h3>
-        <div id="options"></div>
+    <div class="build">
+      <div class="build-preview">
+        <div class="stage" id="stage">
+          <iframe id="liveFrame" title="채팅창 미리보기" loading="lazy" tabindex="-1" scrolling="no"></iframe>
+        </div>
+        <p class="stage-note">예시 디자인(미루루)이에요. 실제 작업은 채널 분위기에 맞춰 새로 만들어요.</p>
       </div>
-      <div class="estimate-sum">
-        <span class="sum-label">예상 견적</span>
-        <strong id="sumPrice">가격 준비 중</strong>
-        <span class="sum-days" id="sumDays"></span>
-        <p class="sum-note">최종 금액은 아트머그 결제 화면 기준이에요.</p>
+      <div class="build-panel">
+        <div class="base-box">
+          <span class="base-tag">기본 포함</span>
+          <h3 id="baseName">기본 구성</h3>
+          <ul id="baseItems"></ul>
+          <p class="base-price" id="basePrice"></p>
+        </div>
+        <h3 class="panel-h">미리보기에 보이는 옵션</h3>
+        <div class="opt-list" id="visualOpts"></div>
+        <h3 class="panel-h">그 밖의 옵션</h3>
+        <div class="opt-list" id="extraOpts"></div>
+        <div class="estimate-sum">
+          <span class="sum-label">예상 견적</span>
+          <strong id="sumPrice">가격 준비 중</strong>
+          <span class="sum-days" id="sumDays"></span>
+          <p class="sum-note">최종 금액은 아트머그 결제 화면 기준이에요.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -182,7 +193,6 @@
       <label><span>방송 플랫폼</span>
         <select name="platform"><option>위플랩 (치지직)</option><option>위플랩 (SOOP)</option><option>기타 (문의 때 알려 주세요)</option></select>
       </label>
-      <label><span>단계</span><select name="tier" id="tierSelect"></select></label>
       <label><span>원하는 분위기</span><input name="mood" placeholder="예) 귀엽고 몽글몽글, 픽셀 게임 느낌"></label>
       <label><span>메인 색</span><input name="color" placeholder="예) 연보라 + 노랑"></label>
       <label><span>로고·캐릭터</span>
@@ -190,7 +200,7 @@
       </label>
       <label class="wide"><span>참고 자료</span><textarea name="refs" rows="3" placeholder="좋아하는 채팅창이나 분위기를 글로 적어 주세요. 이미지는 아트머그 문의에 첨부해 주세요."></textarea></label>
       <label><span>희망 일정</span><input name="date" placeholder="예) 11월 20일 방송 전까지"></label>
-      <label><span>추가 옵션</span><input name="opts" id="optsField" readonly placeholder="위 견적에서 고른 옵션이 들어가요"></label>
+      <label class="wide"><span>고른 구성</span><input name="opts" id="optsField" readonly placeholder="위 「구성·가격」에서 고른 옵션이 들어가요"></label>
       <div class="order-foot wide">
         <button type="button" class="btn btn-ink" id="copyBtn">양식 복사</button>
         <span class="order-hint">개인 연락처는 적지 마세요. 아트머그 문의로만 이야기해요.</span>
@@ -201,7 +211,7 @@
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="config.js?v=3"></script>
-<script src="app.js?v=3"></script>
+<script src="config.js?v=4"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>
