@@ -203,8 +203,7 @@
       '원하는 분위기: ' + v('mood'),
       '메인 색: ' + v('color'),
       '로고·캐릭터: ' + v('assets'),
-      '참고 자료: ' + v('refs'),
-      '희망 일정: ' + v('date')
+      '참고 자료: ' + v('refs')
     );
     return lines.join('\n');
   }
