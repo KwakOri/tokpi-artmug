@@ -203,10 +203,10 @@
 
     var days = C.base.days;
     opts.forEach(function (o) { days += o.days || 0; });
-    if (opts.some(function (o) { return o.half; })) days = Math.ceil(days / 2);
+    var rush = opts.filter(function (o) { return o.deadline; })[0];
 
     var totalText = total == null ? TBD : won(total) + (asked ? ' + ' + ASK : '');
-    var daysText = '작업 기간 약 ' + days + '일';
+    var daysText = rush ? rush.deadline : '작업 기간 약 ' + days + '일';
     var rows = pickRows(opts);
     if (promo) rows.push({ promo: true, label: promo.tag + ' ' + promo.title, price: full == null ? '-' + promo.percent + '%' : '-' + won(full - total) });
     $('#pickList').innerHTML = rows.map(function (r) {

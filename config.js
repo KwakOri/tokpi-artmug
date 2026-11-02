@@ -16,7 +16,7 @@ window.TOKPI_CONFIG = {
    * preview: 켜고 끌 때 미리보기(assets/live/miruru.html)에 넘기는 값.
    * design: true면 미리보기 값이 없어도 위쪽 「디자인 옵션」에 놓인다. preview도 design도 없으면 「그 밖의 옵션」.
    * kind: 'won'은 금액을 더하고, 'percent'는 나머지 합계에 비율을 더한다.
-   * days: 작업 기간에 더할 날 수. half: true면 작업 기간을 절반으로.
+   * days: 작업 기간에 더할 날 수. deadline: 켜면 작업 기간 대신 보여 줄 마감 문구.
    * needs: 이 옵션을 켜면 함께 켜지는 옵션.
    * ask: true면 가격 칸에 「별도 문의」로 보이고, 견적 합계에는 넣지 않고 「+ 별도 문의」만 붙인다.
    */
@@ -26,7 +26,7 @@ window.TOKPI_CONFIG = {
     { id: 'fx', label: '구독·후원 화려한 연출', note: '쾅 떨어지고 반짝이며 등장해요', preview: 'fx', needs: 'cards', kind: 'won', value: 20000, days: 2 },
     { id: 'tiers', label: '금액별 후원 카드', note: '1만·10만·100만 원 이상 후원마다 카드가 달라져요', design: true, needs: 'cards', kind: 'won', value: 30000, days: 2 },
     { id: 'random', label: '랜덤 요소 추가', note: '채팅·구독·후원 카드가 2~3가지 디자인 중 무작위로 떠요', design: true, ask: true },
-    { id: 'rush', label: '빠른 마감', note: '작업 기간 절반', kind: 'percent', value: 50, half: true },
+    { id: 'rush', label: '빠른 마감', note: '결제일 기준 일주일 안에 완성해요', kind: 'percent', value: 50, deadline: '결제일 기준 일주일 안에 완성' },
     { id: 'private', label: '포트폴리오 비공개', note: '완성작을 공개하지 않아요', kind: 'won', value: 20000 },
   ],
   /*
