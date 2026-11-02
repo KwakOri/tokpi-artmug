@@ -72,30 +72,17 @@
   }
   window.addEventListener('scroll', markNav, { passive: true });
 
-  /* ---------- 미리보기 ---------- */
-  var box = $('#previewBox');
-  var frame = $('#previewFrame');
-  var screen = $('#previewScreen');
-  function fitPreview() {
-    var s = Math.min(1, box.clientWidth / 500, box.clientHeight / 800);
-    frame.style.setProperty('--s', s.toFixed(4));
-  }
-  if ('ResizeObserver' in window) new ResizeObserver(fitPreview).observe(box);
-  window.addEventListener('resize', fitPreview);
-  fitPreview();
-
-  $$('[data-preview]').forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      var name = tab.getAttribute('data-preview');
-      $$('[data-preview]').forEach(function (t) {
-        var on = t === tab;
-        t.classList.toggle('is-on', on);
-        t.setAttribute('aria-selected', on ? 'true' : 'false');
-      });
-      screen.setAttribute('data-bg', name);
-      frame.src = 'previews/' + name + '.html';
+  /* ---------- 미리보기 갤러리 ---------- */
+  var gallery = $('#gallery');
+  function fitPreviews() {
+    $$('.chat-screen').forEach(function (box) {
+      box.querySelector('iframe').style.setProperty('--s', (box.clientWidth / 500).toFixed(4));
     });
-  });
+    gallery.classList.toggle('is-scroll', gallery.scrollWidth > gallery.clientWidth + 1);
+  }
+  if ('ResizeObserver' in window) new ResizeObserver(fitPreviews).observe(gallery);
+  window.addEventListener('resize', fitPreviews);
+  fitPreviews();
 
   /* ---------- 가격·견적 ---------- */
   var won = function (n) { return n.toLocaleString('ko-KR') + '원'; };
@@ -137,7 +124,8 @@
     var l = document.createElement('label');
     l.className = 'opt';
     var price = o.value == null ? '가격 준비 중' : (o.kind === 'percent' ? '+' + o.value + '%' : '+' + won(o.value));
-    l.innerHTML = '<input type="checkbox" value="' + o.id + '"><span><b>' + o.label + '</b><small>' + o.note + ' · ' + price + '</small></span>';
+    l.innerHTML = '<span><b>' + o.label + '</b><small>' + o.note + ' · ' + price + '</small></span>' +
+      '<span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
     l.querySelector('input').addEventListener('change', function (e) { state.opts[o.id] = e.target.checked; render(); });
     optsEl.appendChild(l);
   });

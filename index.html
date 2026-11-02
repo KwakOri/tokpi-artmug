@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="style.css?v=1">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 <div class="page" id="top">
@@ -19,7 +19,6 @@
         <a href="#preview" data-go="preview">미리보기</a>
         <a href="#price" data-go="price">가격</a>
         <a href="#process" data-go="process">진행</a>
-        <a href="#cases" data-go="cases">사례</a>
         <a href="#notice" data-go="notice">주의사항</a>
       </div>
       <a class="nav-cta" href="#form" data-go="form">신청 양식</a>
@@ -59,26 +58,17 @@
     <div class="sec-head">
       <span class="kicker">PREVIEW</span>
       <h2>방송 화면에서는 이렇게 움직여요</h2>
-      <p>tokpi가 무료로 공개한 할로윈 채팅창이에요. 실제 방송처럼 채팅이 올라와요.</p>
+      <p>tokpi가 만든 채팅창이에요. 실제 방송처럼 채팅이 올라와요.</p>
     </div>
-    <div class="preview-wrap">
-      <div class="preview-tabs" role="tablist">
-        <button type="button" role="tab" class="tab is-on" data-preview="witch" aria-selected="true">마녀 🧙</button>
-        <button type="button" role="tab" class="tab" data-preview="ghost" aria-selected="false">유령 👻</button>
-      </div>
-      <div class="preview-stage">
-        <div class="preview-screen" id="previewScreen" data-bg="witch">
-          <div class="preview-box" id="previewBox">
-            <iframe id="previewFrame" src="previews/witch.html" width="500" height="800" title="채팅창 미리보기" scrolling="no"></iframe>
-          </div>
-        </div>
-        <ul class="feature-list">
-          <li><b>방송 색 그대로</b><span>로고·캐릭터·메인 컬러를 채팅 말풍선과 닉네임에 녹여요.</span></li>
-          <li><b>역할마다 다르게</b><span>시청자·구독자·스트리머 채팅을 구분해 보여 줄 수 있어요.</span></li>
-          <li><b>후원·구독 카드</b><span>후원과 구독 알림도 같은 디자인으로 맞춰요.</span></li>
-          <li><b>복사해서 끝</b><span>완성된 CSS와 설치 안내를 드려요. 붙여 넣기만 하면 돼요.</span></li>
-        </ul>
-      </div>
+    <div class="gallery" id="gallery">
+      <figure class="chat-card" data-bg="witch">
+        <div class="chat-screen"><iframe src="previews/witch.html" width="500" height="800" title="마녀 채팅창 미리보기" scrolling="no"></iframe></div>
+        <figcaption><b>마녀의 밤</b><span>채팅 + 구독·후원 카드</span></figcaption>
+      </figure>
+      <figure class="chat-card" data-bg="ghost">
+        <div class="chat-screen"><iframe src="previews/ghost.html" width="500" height="800" title="유령 채팅창 미리보기" scrolling="no"></iframe></div>
+        <figcaption><b>꼬마 유령</b><span>채팅 + 구독·후원 카드</span></figcaption>
+      </figure>
     </div>
   </section>
 
@@ -120,24 +110,6 @@
       <li><span class="num">5</span><b>완성</b><p>완성 CSS와 설치 안내를 드려요.</p></li>
     </ol>
     <p class="days-line" id="daysLine"></p>
-  </section>
-
-  <section class="sec sec-night" id="cases">
-    <div class="sec-head">
-      <span class="kicker">CASES</span>
-      <h2>tokpi가 만든 채팅창</h2>
-      <p>할로윈 시즌에 무료로 공개했던 채팅창이에요.</p>
-    </div>
-    <div class="cases">
-      <figure class="case c1">
-        <img src="assets/case-witch.webp" alt="마녀 할로윈 채팅창" width="1000" height="1276">
-        <figcaption><b>마녀의 밤</b><span>할로윈 무료 공개 · 채팅 + 후원 카드</span></figcaption>
-      </figure>
-      <figure class="case c2">
-        <img src="assets/case-ghost.webp" alt="유령 할로윈 채팅창" width="1000" height="1276">
-        <figcaption><b>꼬마 유령</b><span>할로윈 무료 공개 · 채팅 + 후원 카드</span></figcaption>
-      </figure>
-    </div>
   </section>
 
   <section class="sec" id="notice">
@@ -211,6 +183,6 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="config.js?v=1"></script>
-<script src="app.js?v=1"></script>
+<script src="app.js?v=2"></script>
 </body>
 </html>
