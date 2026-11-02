@@ -56,9 +56,9 @@ p { margin: 0; }
   border: var(--line);
   border-radius: 999px;
   box-shadow: 4px 4px 0 var(--ink);
-  padding: 8px 10px 8px 16px;
+  padding: 8px 10px 8px 36px;
 }
-.brand { display: flex; align-items: center; gap: 8px; text-decoration: none; font-family: var(--display); font-size: 22px; margin-left: 12px; }
+.brand { display: flex; align-items: center; gap: 8px; text-decoration: none; font-family: var(--display); font-size: 22px; }
 .nav-links { display: flex; gap: 4px; margin-left: auto; }
 .nav-links a {
   text-decoration: none; font-weight: 600; font-size: 15px;
