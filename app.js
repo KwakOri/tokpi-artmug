@@ -184,7 +184,7 @@
     sendHeight(false);
   }
 
-  $('#daysLine').textContent = '작업 기간 · ' + C.base.name + ' 약 ' + C.base.days + '일, 옵션에 따라 늘어나요 (결제 후부터)';
+  $('#daysLine').textContent = '작업 기간 · ' + C.base.name + ' 약 ' + C.base.days + '일, 옵션에 따라 늘어나요 (작업 시작일부터)';
   render();
 
   /* ---------- 슬롯: 구글 시트 「공개」 탭 CSV ---------- */
