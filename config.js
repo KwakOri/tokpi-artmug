@@ -38,9 +38,7 @@ window.TOKPI_CONFIG = {
   ],
   /* kind: 'won'은 금액을 더하고, 'percent'는 단계 가격에 비율을 더한다. */
   options: [
-    { id: 'rush', label: '급행', note: '제작 기간 절반', kind: 'percent', value: null },
-    { id: 'role', label: '역할 추가', note: '매니저·VIP 등 한 가지', kind: 'won', value: null },
-    { id: 'revision', label: '추가 수정', note: '한 번 더', kind: 'won', value: null },
+    { id: 'rush', label: '빠른 마감', note: '제작 기간 절반', kind: 'percent', value: null },
     { id: 'private', label: '포트폴리오 비공개', note: '완성작을 공개하지 않아요', kind: 'won', value: null },
   ],
 };
