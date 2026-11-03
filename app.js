@@ -158,9 +158,15 @@
     var g = document.createElement('div');
     g.className = 'opt-group';
     var l = document.createElement('label');
-    l.className = 'opt';
-    l.innerHTML = '<span class="opt-text"><b>' + o.label + '</b>' + (o.note ? '<small>' + o.note + '</small>' : '') + '</span>' +
-      '<em class="opt-price">' + optPrice(o) + '</em><span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
+    if (o.pair) {
+      /* 묶음 칸 안의 버튼: 누르면 켜지고 다시 누르면 꺼진다 */
+      l.className = 'seg-opt';
+      l.innerHTML = '<input type="checkbox" value="' + o.id + '"><b>' + (o.short || o.label) + '</b><em class="opt-price">' + optPrice(o) + '</em>';
+    } else {
+      l.className = 'opt';
+      l.innerHTML = '<span class="opt-text"><b>' + o.label + '</b>' + (o.note ? '<small>' + o.note + '</small>' : '') + '</span>' +
+        '<em class="opt-price">' + optPrice(o) + '</em><span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
+    }
     var input = l.querySelector('input');
     /* 라벨 안에 「?」 버튼(button)이 먼저 오므로 라벨이 스위치를 가리키게 못 박는다 */
     input.id = 'opt-' + o.id;
@@ -180,13 +186,14 @@
       }
       kids.appendChild(g);
     } else if (o.pair) {
-      /* 같은 pair끼리 한 줄에 반씩 */
+      /* 같은 pair끼리 칸 하나에 묶는다 */
       if (!pairs[o.pair]) {
         pairs[o.pair] = document.createElement('div');
         pairs[o.pair].className = 'opt-pair';
+        pairs[o.pair].innerHTML = '<b class="opt-pair-title">' + ((C.pairs || {})[o.pair] || '') + '</b><div class="seg"></div>';
         $(o.preview || o.design ? '#visualOpts' : '#extraOpts').appendChild(pairs[o.pair]);
       }
-      pairs[o.pair].appendChild(g);
+      $('.seg', pairs[o.pair]).appendChild(g);
     } else {
       $(o.preview || o.design ? '#visualOpts' : '#extraOpts').appendChild(g);
     }

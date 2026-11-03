@@ -469,17 +469,38 @@ a.credit:hover b { text-decoration: underline; }
 
 /* 하위 옵션: 상위 옵션 아래에 들여 쓰고, 상위가 꺼져 있으면 흐리게 */
 .opt-group { display: grid; gap: 10px; }
-/* 반씩 나란히 놓는 옵션(pair): 칸이 좁으니 가격을 제목·설명 아래로 */
-.opt-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.opt-pair .opt { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "text switch" "price switch"; column-gap: 10px; row-gap: 4px; height: 100%; box-sizing: border-box; }
-.opt-pair .opt-text { grid-area: text; }
-.opt-pair .opt-price { grid-area: price; }
-.opt-pair .opt .switch { grid-area: switch; }
-@media (max-width: 560px) {
-  /* 폰은 칸이 더 좁아 스위치를 가격 옆으로 내려 제목·설명이 칸 너비를 다 쓰게 */
-  .opt-pair .opt { grid-template-areas: "text text" "price switch"; padding: 10px 10px 10px 12px; }
-  .opt-pair .opt-price { align-self: center; }
+/* 묶음 칸(pair): 제목 옆에 버튼 몇 개, 하나만 켜진다 */
+.opt-pair {
+  display: flex; gap: 12px; align-items: center; justify-content: space-between;
+  border: 2px solid var(--ink); border-radius: 16px; padding: 10px 12px 10px 14px; background: var(--cream); transition: background .15s;
 }
+.opt-pair:has(input:checked) { background: var(--lilac); }
+.opt-pair-title { font-size: 15px; }
+.seg { display: flex; gap: 6px; }
+.seg-opt {
+  position: relative; display: grid; justify-items: center; gap: 1px; cursor: pointer; min-width: 112px;
+  border: 2px solid var(--ink); border-radius: 12px; padding: 6px 12px; background: var(--paper);
+  transition: background .15s, filter .15s, transform .15s, box-shadow .15s;
+}
+.seg-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+.seg-opt b { font-size: 14px; white-space: nowrap; }
+.seg-opt .opt-price { font-size: 13px; }
+.seg-opt:has(input:checked) { background: var(--orange); box-shadow: inset 0 0 0 2px var(--ink); }
+.seg-opt:has(input:checked) .opt-price { color: var(--ink); }
+.seg-opt:has(input:focus-visible) { outline: 3px solid var(--purple); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  .seg-opt:hover { filter: brightness(1.05); transform: translateY(-2px); box-shadow: 3px 3px 0 var(--ink); }
+  .seg-opt:has(input:checked):hover { box-shadow: inset 0 0 0 2px var(--ink), 3px 3px 0 var(--ink); }
+}
+@media (prefers-reduced-motion: reduce) { .seg-opt:hover { transform: none; } }
+@media (max-width: 560px) {
+  /* 폰은 제목 아래로 버튼을 내려 칸 너비를 반씩 */
+  .opt-pair { flex-direction: column; align-items: stretch; gap: 8px; }
+  .seg > .opt-group { flex: 1; min-width: 0; }
+  .seg-opt { min-width: 0; }
+  .seg-opt .opt-price { grid-area: auto; }
+}
+
 .opt-children { display: grid; gap: 10px; margin-left: 18px; padding-left: 14px; border-left: 3px dashed var(--dash); }
 .opt-group:not(.is-on) > .opt-children { opacity: .55; }
 .opt-group:not(.is-on) > .opt-children:hover { opacity: .85; }
