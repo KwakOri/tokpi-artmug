@@ -8,11 +8,11 @@
 <section name="am-root">
   <div name="fallback" style="padding:24px;border:3px solid #1b1530;border-radius:20px;background:#fff7e8;text-align:center;line-height:1.7;">
     <b style="font-size:20px;">tokpi 채팅창 주문제작</b><br>
-    라이트 · 스탠다드 · 프로 / 시안 제공 + 수정 2회<br>
-    가격과 작업 기간은 상품 정보를 확인해 주세요.
+    기본 구성(시청자 채팅 1종 · 시안 제공 · 수정 2회) + 디자인 옵션<br>
+    가격은 상품 정보를 확인해 주세요.
   </div>
   <div name="stage">
-    <iframe src="https://kwakori.github.io/tokpi-artmug/?v=2" width="1180" height="760" scrolling="no" frameborder="0" allow="clipboard-write" title="tokpi 채팅창 주문제작" style="display:block;width:100%;max-width:1180px;height:760px;border:0;margin:0 auto;"></iframe>
+    <iframe src="https://kwakori.github.io/tokpi-artmug/?v=3" width="1180" height="760" scrolling="no" frameborder="0" allow="clipboard-write" title="tokpi 채팅창 주문제작" style="display:block;width:100%;max-width:1180px;height:760px;border:0;margin:0 auto;"></iframe>
   </div>
 </section>
 ```
