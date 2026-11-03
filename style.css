@@ -245,8 +245,13 @@ a.credit:hover b { text-decoration: underline; }
 .opt {
   display: flex; gap: 12px; align-items: center; justify-content: space-between; cursor: pointer;
   border: 2px solid var(--ink); border-radius: 16px; padding: 10px 12px 10px 14px; background: var(--cream);
-  transition: background .15s;
+  transition: background .15s, filter .15s, transform .15s, box-shadow .15s;
 }
+/* 마우스를 올리면 살짝 밝아지고 떠올라 지금 가리키는 칸을 보여 준다 */
+@media (hover: hover) and (pointer: fine) {
+  .opt:hover { filter: brightness(1.05); transform: translateY(-2px); box-shadow: 3px 3px 0 var(--ink); }
+}
+@media (prefers-reduced-motion: reduce) { .opt:hover { transform: none; } }
 .opt b { display: block; font-size: 15px; }
 .opt-text { flex: 1; min-width: 0; }
 .opt-price { flex: none; font-style: normal; font-weight: 700; font-size: 15px; color: var(--purple); white-space: nowrap; }
