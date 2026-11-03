@@ -160,6 +160,9 @@
     l.innerHTML = '<span class="opt-text"><b>' + o.label + '</b><small>' + o.note + '</small></span>' +
       '<em class="opt-price">' + optPrice(o) + '</em><span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
     var input = l.querySelector('input');
+    /* 라벨 안에 「?」 버튼(button)이 먼저 오므로 라벨이 스위치를 가리키게 못 박는다 */
+    input.id = 'opt-' + o.id;
+    l.htmlFor = input.id;
     input.checked = state[o.id];
     input.addEventListener('change', function () { setOpt(o.id, input.checked); });
     inputs[o.id] = input;

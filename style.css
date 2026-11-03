@@ -438,6 +438,11 @@ a.credit:hover b { text-decoration: underline; }
   .order { grid-template-columns: 1fr; padding: 22px 18px; }
   .closing { flex-direction: column; text-align: center; padding: 40px 20px; }
   .closing img { width: 140px; }
+  /* 옵션 칸: 가격을 설명 아래로 내려 제목·설명이 넓게 쓰이게 */
+  .opt { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "text switch" "price switch"; column-gap: 12px; row-gap: 4px; }
+  .opt-text { grid-area: text; }
+  .opt-price { grid-area: price; font-size: 14px; }
+  .opt .switch { grid-area: switch; }
   .closing h2 { font-size: 28px; }
 }
 
@@ -485,6 +490,11 @@ a.credit:hover b { text-decoration: underline; }
 .tier-row.is-base span::before { content: ''; display: inline-block; width: 12px; height: 12px; margin-right: 6px; border: 2px solid var(--ink); border-radius: 4px; background: var(--cream); vertical-align: -1px; }
 .tier-del { flex: none; width: 26px; height: 26px; border: 2px solid var(--ink); border-radius: 50%; background: var(--cream); font: 700 14px/1 var(--body); cursor: pointer; }
 .tier-add { justify-self: start; padding: 5px 12px; border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow); font: 700 13px var(--body); cursor: pointer; }
+@media (max-width: 560px) {
+  .tier-box { margin-left: 0; padding: 10px; }
+  .tier-bar { margin: 0 2px; }
+  .tier-cell { font-size: 10px; letter-spacing: -.03em; }
+}
 
 /* 옵션 말풍선(app.js showTip) */
 .opt-tip { position: absolute; z-index: 40; width: 270px; padding: 10px; border: var(--line); border-radius: 18px; background: var(--paper); box-shadow: 4px 4px 0 var(--ink); pointer-events: none; opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity .15s, transform .15s, visibility 0s .15s; }
