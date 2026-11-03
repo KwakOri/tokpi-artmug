@@ -313,6 +313,7 @@ a.credit:hover b { text-decoration: underline; }
   padding: 32px;
 }
 .order label { display: grid; gap: 6px; }
+.order label[hidden] { display: none; }
 .order label span { font-weight: 700; font-size: 15px; }
 .order .wide { grid-column: 1 / -1; }
 .order input, .order select, .order textarea {
@@ -468,6 +469,17 @@ a.credit:hover b { text-decoration: underline; }
 
 /* 하위 옵션: 상위 옵션 아래에 들여 쓰고, 상위가 꺼져 있으면 흐리게 */
 .opt-group { display: grid; gap: 10px; }
+/* 반씩 나란히 놓는 옵션(pair): 칸이 좁으니 가격을 제목·설명 아래로 */
+.opt-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.opt-pair .opt { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "text switch" "price switch"; column-gap: 10px; row-gap: 4px; height: 100%; box-sizing: border-box; }
+.opt-pair .opt-text { grid-area: text; }
+.opt-pair .opt-price { grid-area: price; }
+.opt-pair .opt .switch { grid-area: switch; }
+@media (max-width: 560px) {
+  /* 폰은 칸이 더 좁아 스위치를 가격 옆으로 내려 제목·설명이 칸 너비를 다 쓰게 */
+  .opt-pair .opt { grid-template-areas: "text text" "price switch"; padding: 10px 10px 10px 12px; }
+  .opt-pair .opt-price { align-self: center; }
+}
 .opt-children { display: grid; gap: 10px; margin-left: 18px; padding-left: 14px; border-left: 3px dashed var(--dash); }
 .opt-group:not(.is-on) > .opt-children { opacity: .55; }
 .opt-group:not(.is-on) > .opt-children:hover { opacity: .85; }

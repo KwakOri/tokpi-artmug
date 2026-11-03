@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy.css">
-<link rel="stylesheet" href="style.css?v=26">
+<link rel="stylesheet" href="style.css?v=27">
 </head>
 <body>
 <div class="page" id="top">
@@ -186,7 +186,7 @@
         <summary>저작권 · 포트폴리오</summary>
         <ul>
           <li>디자인 저작권은 tokpi에 있어요. 완성작은 tokpi 포트폴리오로 공개할 수 있어요.</li>
-          <li>공개를 원하지 않으면 「포트폴리오 비공개」 옵션을 골라 주세요. 공개 시기만 늦추고 싶으면 따로 문의해 주세요.</li>
+          <li>공개를 원하지 않으면 「포트폴리오 비공개」, 공개 시기만 늦추고 싶으면 「포트폴리오 공개 미루기」 옵션을 골라 주세요.</li>
         </ul>
       </details>
       <details>
@@ -218,6 +218,7 @@
       <label><span>로고·캐릭터</span>
         <select name="assets"><option>둘 다 있어요</option><option>로고만 있어요</option><option>캐릭터만 있어요</option><option>없어요</option></select>
       </label>
+      <label class="wide" id="delayField" hidden><span>공개 희망일</span><input name="delayDate" placeholder="예) 2027년 3월 1일 이후"></label>
       <label class="wide"><span>참고 자료</span><textarea name="refs" rows="3" placeholder="좋아하는 채팅창이나 분위기를 글로 적어 주세요. 이미지는 아트머그 문의에 첨부해 주세요."></textarea></label>
       <div class="order-foot wide">
         <button type="button" class="btn btn-ink" id="copyBtn">양식 복사</button>
@@ -229,7 +230,7 @@
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<script src="config.js?v=17"></script>
-<script src="app.js?v=26"></script>
+<script src="config.js?v=18"></script>
+<script src="app.js?v=27"></script>
 </body>
 </html>

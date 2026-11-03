@@ -19,6 +19,7 @@ window.TOKPI_CONFIG = {
    *   bounds: 플랫폼에서 고를 수 있는 구간 경계(원). 구간 시작 금액은 이 중에서만 고른다(경계 3개 → 바 네 칸).
    * deadline: 켜면 고른 구성 아래에 보여 줄 마감 문구. 작업 기간은 슬롯에 따라 정해져서 따로 적지 않는다.
    * parent: 이 옵션이 들어가는 상위 옵션. 상위 옵션 아래에 들여 써서 보이고, 켜면 상위 옵션도 켜지고, 상위를 끄면 같이 꺼진다.
+   * pair: 같은 값끼리 한 줄에 반씩 나란히 놓이고, 하나만 고를 수 있다(하나를 켜면 나머지는 꺼진다).
    * ask: true면 가격 칸에 「별도 문의」로 보이고, 견적 합계에는 넣지 않고 「+ 별도 문의」만 붙인다.
    * tip: 옵션에 마우스를 올리면 위쪽 말풍선에(폰은 「?」 버튼 팝업에) 띄울 미리보기. 없으면 말풍선을 안 띄운다.
    *   text: 한 줄 설명 · cls: 말풍선에 붙일 class(tip-chat은 폰 팝업에서 채팅 이미지를 좌우로 엇갈려 작게). 이미지가 둘 이상이면 PC 말풍선은 넓어지고 가로로 늘어놓는다 · img: 이미지 주소(여러 장이면 배열) · video: 확장자 뺀 주소(.webm·.mp4·.jpg를 같이 둔다) · html: 직접 그린 HTML
@@ -31,7 +32,9 @@ window.TOKPI_CONFIG = {
     { id: 'roles', label: '스트리머·구독자 채팅 따로', preview: 'roles', on: true, kind: 'won', value: 30000, tip: { cls: 'tip-chat', text: '시청자·스트리머·구독자마다 이름표와 말풍선이 달라요', img: ['assets/tips/viewer.webp', 'assets/tips/streamer.webp', 'assets/tips/subchat.webp'] } },
     { id: 'random', label: '랜덤 요소 추가', design: true, ask: true, tip: { text: '같은 채팅도 올 때마다 조금씩 달라요', html: '<div class="tip-random"><p><b>장식 랜덤</b><span>★</span><span>♥</span><span>✦</span><small>장식 하나당 +1만 원</small></p><p><b>카드 통째로 랜덤·이스터에그</b><span class="wide">가끔 전혀 다른 깜짝 카드가 떠요</span><small>+2~3만 원 선</small></p></div>' } },
     { id: 'rush', label: '빠른 마감', note: '결제일 기준 일주일 안에 완성해요', kind: 'percent', value: 50, deadline: '결제일 기준 일주일 안에 완성' },
-    { id: 'private', label: '포트폴리오 비공개', note: '완성작을 공개하지 않아요', kind: 'won', value: 20000 },
+    { id: 'private', label: '포트폴리오 비공개', note: '완성작을 공개하지 않아요', pair: 'portfolio', kind: 'won', value: 20000 },
+    /* 2026-11-04 공개 미루기 가격은 임시값. 켜면 신청 양식에 「공개 희망일」 칸이 나온다 */
+    { id: 'delay', label: '포트폴리오 공개 미루기', note: '원하는 날짜 이후에 공개해요', pair: 'portfolio', kind: 'won', value: 10000 },
   ],
   /*
    * promo: 기간 한정 할인. month(한국 시간 기준 그달)에만 켜진다. 지나면 저절로 사라지니 지울 필요는 없다.

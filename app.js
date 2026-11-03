@@ -153,6 +153,7 @@
 
   var inputs = {};
   var groups = {};
+  var pairs = {};
   C.options.forEach(function (o) {
     var g = document.createElement('div');
     g.className = 'opt-group';
@@ -178,6 +179,14 @@
         groups[o.parent].appendChild(kids);
       }
       kids.appendChild(g);
+    } else if (o.pair) {
+      /* 같은 pair끼리 한 줄에 반씩 */
+      if (!pairs[o.pair]) {
+        pairs[o.pair] = document.createElement('div');
+        pairs[o.pair].className = 'opt-pair';
+        $(o.preview || o.design ? '#visualOpts' : '#extraOpts').appendChild(pairs[o.pair]);
+      }
+      pairs[o.pair].appendChild(g);
     } else {
       $(o.preview || o.design ? '#visualOpts' : '#extraOpts').appendChild(g);
     }
@@ -364,7 +373,9 @@
 
   function setOpt(id, on) {
     state[id] = on;
+    var me = C.options.filter(function (o) { return o.id === id; })[0];
     C.options.forEach(function (o) {
+      if (on && me.pair && o.pair === me.pair && o.id !== id) state[o.id] = false;
       if (on && o.id === id && o.parent) state[o.parent] = true;
       if (!on && o.parent === id) state[o.id] = false;
     });
@@ -425,6 +436,7 @@
 
   function render() {
     var opts = chosenOpts();
+    $('#delayField').hidden = !state.delay;
     var total = C.base.price;
     var pct = 0;
     opts.forEach(function (o) {
@@ -570,6 +582,7 @@
       '로고·캐릭터: ' + v('assets'),
       '참고 자료: ' + v('refs')
     );
+    if (state.delay) lines.splice(lines.length - 1, 0, '공개 희망일: ' + v('delayDate'));
     return lines.join('\n');
   }
 
