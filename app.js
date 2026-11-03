@@ -4,7 +4,8 @@
   var C = window.TOKPI_CONFIG;
   var SOURCE = 'tokpi-artmug';
   var PARENT_SOURCE = 'tokpi-artmug-parent';
-  var embedded = window.parent !== window;
+  /* ?solo=1: 부모 페이지 스크립트 없이 iframe 안에서 스스로 스크롤하는 방식(아트머그가 스크립트를 지울 때). 단독 페이지처럼 동작 */
+  var embedded = window.parent !== window && !/[?&]solo=1(&|$)/.test(location.search);
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 

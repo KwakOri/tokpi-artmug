@@ -35,3 +35,25 @@
 
 `config.js`의 `price`·`omakase`·옵션 `value`를 채우고, 오마카세를 보이려면 `showOmakase: true`로 바꾼다.
 아트머그 상품 정보의 가격·작업 기간 칸도 같은 숫자로 맞춘다.
+
+## 커스텀 메뉴 칸이 저장 때 비워질 때 (2026-11-04 확인)
+
+아트머그가 커스텀 메뉴 칸의 `<script>`를 지운다(PC·모바일 둘 다 빈칸으로 저장됨).
+
+### A. 본문 끝에 스크립트를 같이 넣어 보기
+
+1번 본문 코드 맨 아래(`</section>` 뒤)에 커스텀 메뉴용 `<script src=…artmug-parent.js?v=1>` 줄을 붙여 HTML 모드로 저장한다.
+저장 뒤 노란 안내 상자가 사라지고 iframe이 끝까지 펼쳐지면 성공. 상자가 그대로면 본문에서도 스크립트가 지워진 것 → B.
+
+### B. 스크립트 없이 (iframe 안에서 스크롤)
+
+```html
+<section name="am-root">
+  <div name="stage">
+    <iframe src="https://kwakori.github.io/tokpi-artmug/?solo=1&v=4" width="1180" height="760" scrolling="yes" frameborder="0" allow="clipboard-write" title="tokpi 채팅창 주문제작" style="display:block;width:100%;max-width:1180px;height:85vh;min-height:640px;border:0;margin:0 auto;"></iframe>
+  </div>
+</section>
+```
+
+`?solo=1`이면 페이지가 부모 스크립트를 기다리지 않고 단독 페이지처럼 돈다: 메뉴·미리보기 따라오기·말풍선·팝업이 iframe 안 스크롤 기준.
+iframe 높이는 화면의 85%로 고정, 그 안에서 스크롤한다. 「내용 더 보기」 접힘은 못 푼다(손님이 눌러야 펼쳐짐).
