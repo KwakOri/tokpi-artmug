@@ -179,6 +179,53 @@
     }
   });
 
+  /* 옵션 말풍선: 마우스를 올리거나 키보드로 고르면 옵션 위에 tip(설명·이미지·영상·HTML)을 띄운다.
+     마우스가 없는 기기(폰)는 누르면 바로 켜져서 띄우지 않는다 */
+  var tip = document.createElement('div');
+  tip.className = 'opt-tip';
+  tip.setAttribute('role', 'tooltip');
+  tip.id = 'optTip';
+  page.appendChild(tip);
+  var tipFor = null;
+  function tipBody(t) {
+    var html = '';
+    if (t.video) html += '<video class="tip-media" autoplay muted loop playsinline poster="' + t.video + '.jpg"><source src="' + t.video + '.webm" type="video/webm"><source src="' + t.video + '.mp4" type="video/mp4"></video>';
+    [].concat(t.img || []).forEach(function (src) { html += '<img class="tip-media" src="' + src + '" alt="">'; });
+    if (t.html) html += t.html;
+    if (t.text) html += '<p class="tip-text">' + t.text + '</p>';
+    return html;
+  }
+  function showTip(o, l) {
+    if (tipFor !== o.id) { tip.innerHTML = tipBody(o.tip); tip.className = 'opt-tip' + (o.tip.cls ? ' ' + o.tip.cls : ''); tipFor = o.id; }
+    tip.classList.add('is-on');
+    l.setAttribute('aria-describedby', 'optTip');
+    var pr = page.getBoundingClientRect(), r = l.getBoundingClientRect();
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var x = Math.min(Math.max(8, r.left - pr.left + r.width / 2 - w / 2), page.clientWidth - w - 8);
+    /* 화면 위쪽(고정 메뉴 아래)에 자리가 없으면 옵션 아래로 */
+    var viewTop = embedded && viewport ? -viewport.iframeTop : 0;
+    var below = r.top - h - 14 < viewTop + nav.offsetHeight + 16;
+    tip.classList.toggle('is-below', below);
+    tip.style.left = x + 'px';
+    tip.style.top = (below ? r.bottom - pr.top + 12 : r.top - pr.top - h - 12) + 'px';
+    tip.style.setProperty('--tail', (r.left - pr.left + r.width / 2 - x) + 'px');
+  }
+  function hideTip() { tip.classList.remove('is-on'); }
+  var hoverable = window.matchMedia('(hover: hover) and (pointer: fine)');
+  C.options.forEach(function (o) {
+    if (!o.tip) return;
+    var l = $('.opt', groups[o.id]);
+    l.addEventListener('mouseenter', function () { if (hoverable.matches) showTip(o, l); });
+    l.addEventListener('mouseleave', hideTip);
+    inputs[o.id].addEventListener('focus', function () { if (inputs[o.id].matches(':focus-visible')) showTip(o, l); });
+    inputs[o.id].addEventListener('blur', hideTip);
+  });
+  /* 이미지가 늦게 뜨면 높이가 바뀌니 다시 맞춘다 */
+  tip.addEventListener('load', function () {
+    var o = tipFor && C.options.filter(function (x) { return x.id === tipFor; })[0];
+    if (o && tip.classList.contains('is-on')) showTip(o, $('.opt', groups[o.id]));
+  }, true);
+
   /* 금액 구간 편집: 정해진 경계(bounds)로 나뉜 바 위에서 구간 시작점을 드래그해 옮긴다.
      0원~첫 구간 미만은 기본 카드, 구간을 더할 때마다 카드 하나 */
   function tierEditor(o) {

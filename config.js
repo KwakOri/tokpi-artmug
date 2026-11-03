@@ -20,13 +20,16 @@ window.TOKPI_CONFIG = {
    * deadline: 켜면 고른 구성 아래에 보여 줄 마감 문구. 작업 기간은 슬롯에 따라 정해져서 따로 적지 않는다.
    * parent: 이 옵션이 들어가는 상위 옵션. 상위 옵션 아래에 들여 써서 보이고, 켜면 상위 옵션도 켜지고, 상위를 끄면 같이 꺼진다.
    * ask: true면 가격 칸에 「별도 문의」로 보이고, 견적 합계에는 넣지 않고 「+ 별도 문의」만 붙인다.
+   * tip: 옵션에 마우스를 올리면 위쪽 말풍선에 띄울 미리보기. 없으면 말풍선을 안 띄운다.
+   *   text: 한 줄 설명 · cls: 말풍선에 붙일 class(tip-chat은 채팅 이미지를 좌우로 엇갈려 작게) · img: 이미지 주소(여러 장이면 배열) · video: 확장자 뺀 주소(.webm·.mp4·.jpg를 같이 둔다) · html: 직접 그린 HTML
+   *   이미지·영상은 assets/tips/ 아래. 지금 것은 assets/live/miruru.html 화면에서 잘라 냈다.
    */
   options: [
-    { id: 'cards', label: '구독·후원 카드', note: '구독·후원이 오면 테마 카드로 떠요', preview: 'cards', on: true, kind: 'won', value: 30000 },
-    { id: 'fx', label: '구독·후원 화려한 연출', note: '쾅 떨어지고 반짝이며 등장해요', preview: 'fx', parent: 'cards', kind: 'won', value: 20000 },
-    { id: 'tiers', label: '금액별 후원 카드', note: '후원 금액 구간마다 카드가 달라져요', design: true, parent: 'cards', kind: 'tier', value: 30000, tiers: [10000], bounds: [10000, 100000, 1000000] },
-    { id: 'roles', label: '스트리머·구독자 채팅 따로', note: '역할마다 이름표와 말풍선이 달라요', preview: 'roles', on: true, kind: 'won', value: 30000 },
-    { id: 'random', label: '랜덤 요소 추가', note: '장식 랜덤은 장식 하나당 +1만 원, 카드 디자인이 통째로 바뀌는 랜덤·이스터에그는 +2~3만 원 선이에요. 정확한 금액은 상담 때 알려 드려요', design: true, ask: true },
+    { id: 'cards', label: '구독·후원 카드', note: '구독·후원이 오면 테마 카드로 떠요', preview: 'cards', on: true, kind: 'won', value: 30000, tip: { text: '구독·후원이 오면 이런 카드가 떠요', img: ['assets/tips/sub.webp', 'assets/tips/don.webp'] } },
+    { id: 'fx', label: '구독·후원 화려한 연출', note: '쾅 떨어지고 반짝이며 등장해요', preview: 'fx', parent: 'cards', kind: 'won', value: 20000, tip: { text: '카드가 쾅 떨어지고 반짝이가 터지며 등장해요', video: 'assets/tips/fx' } },
+    { id: 'tiers', label: '금액별 후원 카드', note: '후원 금액 구간마다 카드가 달라져요', design: true, parent: 'cards', kind: 'tier', value: 30000, tiers: [10000], bounds: [10000, 100000, 1000000], tip: { text: '구간마다 카드 디자인이 하나씩 늘어요', html: '<div class="tip-tiers"><span class="g0"><b>기본 카드</b>0원~</span><span class="g1"><b>카드 2</b>1만 원~</span><span class="g2"><b>카드 3</b>10만 원~</span></div>' } },
+    { id: 'roles', label: '스트리머·구독자 채팅 따로', note: '역할마다 이름표와 말풍선이 달라요', preview: 'roles', on: true, kind: 'won', value: 30000, tip: { cls: 'tip-chat', text: '시청자·스트리머·구독자마다 이름표와 말풍선이 달라요', img: ['assets/tips/viewer.webp', 'assets/tips/streamer.webp', 'assets/tips/subchat.webp'] } },
+    { id: 'random', label: '랜덤 요소 추가', note: '장식 랜덤은 장식 하나당 +1만 원, 카드 디자인이 통째로 바뀌는 랜덤·이스터에그는 +2~3만 원 선이에요. 정확한 금액은 상담 때 알려 드려요', design: true, ask: true, tip: { text: '같은 채팅도 올 때마다 조금씩 달라요', html: '<div class="tip-random"><p><b>장식 랜덤</b><span>★</span><span>♥</span><span>✦</span><small>장식 하나당 +1만 원</small></p><p><b>카드 통째로 랜덤·이스터에그</b><span class="wide">가끔 전혀 다른 깜짝 카드가 떠요</span><small>+2~3만 원 선</small></p></div>' } },
     { id: 'rush', label: '빠른 마감', note: '결제일 기준 일주일 안에 완성해요', kind: 'percent', value: 50, deadline: '결제일 기준 일주일 안에 완성' },
     { id: 'private', label: '포트폴리오 비공개', note: '완성작을 공개하지 않아요', kind: 'won', value: 20000 },
   ],
