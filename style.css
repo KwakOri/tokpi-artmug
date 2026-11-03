@@ -188,6 +188,8 @@ a.credit:hover b { text-decoration: underline; }
 
 /* build: 왼쪽 미리보기 + 오른쪽 옵션 */
 .build { display: grid; grid-template-columns: minmax(0, 400px) minmax(0, 1fr); gap: 28px; align-items: start; justify-content: center; }
+/* 옵션 목록을 내려도 미리보기가 따라온다(넓은 화면). 임베드는 app.js placeStage */
+@media (min-width: 981px) { .standalone .build-preview { position: sticky; top: 88px; } }
 .stage {
   position: relative; overflow: hidden; height: 640px; border: var(--line); border-radius: 24px;
   box-shadow: 6px 6px 0 var(--ink); background: #20272b;
@@ -460,15 +462,26 @@ a.credit:hover b { text-decoration: underline; }
 .opt-group:not(.is-on) > .opt-children { opacity: .55; }
 .opt-group:not(.is-on) > .opt-children:hover { opacity: .85; }
 /* 금액 구간 편집: 옵션이 켜졌을 때만 */
-.tier-box { display: none; margin: -4px 0 0 14px; padding: 10px 12px; border: 2px dashed var(--ink); border-radius: 14px; background: var(--paper); font-size: 14px; }
-.opt-group.is-on > .tier-box { display: grid; gap: 6px; }
+.tier-box { display: none; margin: -4px 0 0 14px; padding: 12px; border: 2px dashed var(--ink); border-radius: 14px; background: var(--paper); font-size: 14px; }
+.opt-group.is-on > .tier-box { display: grid; gap: 10px; }
+.tier-bar { position: relative; display: flex; height: 40px; margin: 0 4px; border: 2px solid var(--ink); border-radius: 10px; touch-action: none; user-select: none; }
+.tier-cell { flex: 1; display: grid; place-items: center; font: 700 12px var(--body); white-space: nowrap; transition: background .15s; }
+.tier-cell + .tier-cell { border-left: 1px dashed rgba(27, 21, 48, .35); }
+.tier-cell:first-child { border-radius: 8px 0 0 8px; }
+.tier-cell:last-child { border-radius: 0 8px 8px 0; }
+.g0 { background: var(--cream); color: var(--muted); }
+.g1 { background: var(--lilac); }
+.g2 { background: var(--yellow); }
+.g3 { background: var(--apricot); }
+.tier-handle { position: absolute; top: -7px; bottom: -7px; width: 14px; margin-left: -7px; padding: 0; border: 2px solid var(--ink); border-radius: 7px; background: var(--purple); cursor: grab; touch-action: none; }
+.tier-handle::after { content: ''; position: absolute; inset: 9px 3px; border-left: 2px solid var(--paper); border-right: 2px solid var(--paper); }
+.tier-bar.is-drag, .tier-bar.is-drag .tier-handle { cursor: grabbing; }
+.tier-list { display: grid; gap: 6px; }
 .tier-row { display: flex; align-items: center; gap: 8px; margin: 0; }
-.tier-row label { flex: 1; min-width: 0; }
+.tier-row span { flex: 1; min-width: 0; }
 .tier-row em { flex: none; font-style: normal; font-weight: 700; color: var(--purple); }
-.tier-row.is-base span { flex: 1; }
 .tier-row.is-base em { color: var(--muted); font-weight: 600; }
-.tier-row input { width: 64px; padding: 4px 6px; border: 2px solid var(--ink); border-radius: 8px; font: 700 14px var(--body); text-align: right; background: var(--cream); }
+.tier-dot { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border: 2px solid var(--ink); border-radius: 4px; vertical-align: -1px; }
+.tier-row.is-base span::before { content: ''; display: inline-block; width: 12px; height: 12px; margin-right: 6px; border: 2px solid var(--ink); border-radius: 4px; background: var(--cream); vertical-align: -1px; }
 .tier-del { flex: none; width: 26px; height: 26px; border: 2px solid var(--ink); border-radius: 50%; background: var(--cream); font: 700 14px/1 var(--body); cursor: pointer; }
 .tier-add { justify-self: start; padding: 5px 12px; border: 2px solid var(--ink); border-radius: 999px; background: var(--yellow); font: 700 13px var(--body); cursor: pointer; }
-.tier-row input::-webkit-inner-spin-button, .tier-row input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-.tier-row input { -moz-appearance: textfield; }

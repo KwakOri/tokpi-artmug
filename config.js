@@ -16,7 +16,7 @@ window.TOKPI_CONFIG = {
    * design: true면 미리보기 값이 없어도 위쪽 「디자인 옵션」에 놓인다. preview도 design도 없으면 「그 밖의 옵션」.
    * kind: 'won'은 금액을 더하고, 'percent'는 나머지 합계에 비율을 더한다.
    *   'tier'는 금액 구간 옵션: tiers(구간 시작 금액, 원)마다 value를 더한다. 0원~첫 구간 미만은 기본 카드라 값에 안 들어간다.
-   *   maxTiers: 고객이 더할 수 있는 구간 수 상한.
+   *   bounds: 플랫폼에서 고를 수 있는 구간 경계(원). 구간 시작 금액은 이 중에서만 고른다(경계 3개 → 바 네 칸).
    * deadline: 켜면 고른 구성 아래에 보여 줄 마감 문구. 작업 기간은 슬롯에 따라 정해져서 따로 적지 않는다.
    * parent: 이 옵션이 들어가는 상위 옵션. 상위 옵션 아래에 들여 써서 보이고, 켜면 상위 옵션도 켜지고, 상위를 끄면 같이 꺼진다.
    * ask: true면 가격 칸에 「별도 문의」로 보이고, 견적 합계에는 넣지 않고 「+ 별도 문의」만 붙인다.
@@ -24,7 +24,7 @@ window.TOKPI_CONFIG = {
   options: [
     { id: 'cards', label: '구독·후원 카드', note: '구독·후원이 오면 테마 카드로 떠요', preview: 'cards', on: true, kind: 'won', value: 30000 },
     { id: 'fx', label: '구독·후원 화려한 연출', note: '쾅 떨어지고 반짝이며 등장해요', preview: 'fx', parent: 'cards', kind: 'won', value: 20000 },
-    { id: 'tiers', label: '금액별 후원 카드', note: '후원 금액 구간마다 카드가 달라져요', design: true, parent: 'cards', kind: 'tier', value: 30000, tiers: [10000], maxTiers: 4 },
+    { id: 'tiers', label: '금액별 후원 카드', note: '후원 금액 구간마다 카드가 달라져요', design: true, parent: 'cards', kind: 'tier', value: 30000, tiers: [10000], bounds: [10000, 100000, 1000000] },
     { id: 'roles', label: '스트리머·구독자 채팅 따로', note: '역할마다 이름표와 말풍선이 달라요', preview: 'roles', on: true, kind: 'won', value: 30000 },
     { id: 'random', label: '랜덤 요소 추가', note: '장식 랜덤은 장식 하나당 +1만 원, 카드 디자인이 통째로 바뀌는 랜덤·이스터에그는 +2~3만 원 선이에요. 정확한 금액은 상담 때 알려 드려요', design: true, ask: true },
     { id: 'rush', label: '빠른 마감', note: '결제일 기준 일주일 안에 완성해요', kind: 'percent', value: 50, deadline: '결제일 기준 일주일 안에 완성' },
