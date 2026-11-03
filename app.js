@@ -158,7 +158,7 @@
     g.className = 'opt-group';
     var l = document.createElement('label');
     l.className = 'opt';
-    l.innerHTML = '<span class="opt-text"><b>' + o.label + '</b><small>' + o.note + '</small></span>' +
+    l.innerHTML = '<span class="opt-text"><b>' + o.label + '</b>' + (o.note ? '<small>' + o.note + '</small>' : '') + '</span>' +
       '<em class="opt-price">' + optPrice(o) + '</em><span class="switch"><input type="checkbox" role="switch" value="' + o.id + '"><span class="slider"></span></span>';
     var input = l.querySelector('input');
     /* 라벨 안에 「?」 버튼(button)이 먼저 오므로 라벨이 스위치를 가리키게 못 박는다 */
