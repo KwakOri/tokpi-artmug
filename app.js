@@ -180,25 +180,29 @@
   });
 
   /* 옵션 말풍선: 마우스를 올리거나 키보드로 고르면 옵션 위에 tip(설명·이미지·영상·HTML)을 띄운다.
-     마우스가 없는 기기(폰)는 누르면 바로 켜져서 띄우지 않는다 */
+     PC 말풍선은 이미지를 가로로 늘어놓는다. 마우스가 없는 기기(폰)는 옵션 칸의 「?」 버튼을 누르면 팝업으로 띄운다 */
   var tip = document.createElement('div');
   tip.className = 'opt-tip';
   tip.setAttribute('role', 'tooltip');
   tip.id = 'optTip';
   page.appendChild(tip);
-  var tipFor = null;
+  var tipFor = null, tipLabel = null;
   function tipBody(t) {
-    var html = '';
-    if (t.video) html += '<video class="tip-media" autoplay muted loop playsinline poster="' + t.video + '.jpg"><source src="' + t.video + '.webm" type="video/webm"><source src="' + t.video + '.mp4" type="video/mp4"></video>';
-    [].concat(t.img || []).forEach(function (src) { html += '<img class="tip-media" src="' + src + '" alt="">'; });
+    var media = '';
+    if (t.video) media += '<video class="tip-media" width="320" height="268" autoplay muted loop playsinline poster="' + t.video + '.jpg"><source src="' + t.video + '.webm" type="video/webm"><source src="' + t.video + '.mp4" type="video/mp4"></video>';
+    [].concat(t.img || []).forEach(function (src) { media += '<img class="tip-media" src="' + src + '" alt="">'; });
+    var html = media ? '<div class="tip-row">' + media + '</div>' : '';
     if (t.html) html += t.html;
     if (t.text) html += '<p class="tip-text">' + t.text + '</p>';
     return html;
   }
-  function showTip(o, l) {
-    if (tipFor !== o.id) { tip.innerHTML = tipBody(o.tip); tip.className = 'opt-tip' + (o.tip.cls ? ' ' + o.tip.cls : ''); tipFor = o.id; }
-    tip.classList.add('is-on');
-    l.setAttribute('aria-describedby', 'optTip');
+  function tipClass(base, t) {
+    var n = [].concat(t.img || []).length + (t.video ? 1 : 0);
+    return base + (t.cls ? ' ' + t.cls : '') + (n > 1 ? ' is-wide' : '');
+  }
+  function placeTip() {
+    if (!tipLabel || !tip.classList.contains('is-on')) return;
+    var l = tipLabel;
     var pr = page.getBoundingClientRect(), r = l.getBoundingClientRect();
     var w = tip.offsetWidth, h = tip.offsetHeight;
     var x = Math.min(Math.max(8, r.left - pr.left + r.width / 2 - w / 2), page.clientWidth - w - 8);
@@ -210,7 +214,48 @@
     tip.style.top = (below ? r.bottom - pr.top + 12 : r.top - pr.top - h - 12) + 'px';
     tip.style.setProperty('--tail', (r.left - pr.left + r.width / 2 - x) + 'px');
   }
-  function hideTip() { tip.classList.remove('is-on'); }
+  function showTip(o, l) {
+    if (tipFor !== o.id) { tip.innerHTML = tipBody(o.tip); tip.className = tipClass('opt-tip', o.tip); tipFor = o.id; }
+    tip.classList.add('is-on');
+    l.setAttribute('aria-describedby', 'optTip');
+    tipLabel = l;
+    placeTip();
+  }
+  function hideTip() { tip.classList.remove('is-on'); tipLabel = null; }
+  /* 이미지·영상이 늦게 떠서 말풍선 크기가 바뀌면 자리를 다시 잡는다 */
+  if (window.ResizeObserver) new ResizeObserver(placeTip).observe(tip);
+  else tip.addEventListener('load', placeTip, true);
+
+  /* 폰 팝업 */
+  var pop = document.createElement('div');
+  pop.className = 'tip-pop';
+  pop.hidden = true;
+  pop.innerHTML = '<div class="tip-pop-card" role="dialog" aria-modal="true"><button type="button" class="tip-pop-close" aria-label="닫기">×</button><b class="tip-pop-title"></b><div class="tip-pop-body"></div></div>';
+  page.appendChild(pop);
+  var popCard = $('.tip-pop-card', pop), popBtn = null;
+  function openPop(o, btn) {
+    $('.tip-pop-title', pop).textContent = o.label;
+    $('.tip-pop-body', pop).innerHTML = tipBody(o.tip);
+    popCard.className = tipClass('tip-pop-card', o.tip);
+    pop.hidden = false;
+    popBtn = btn;
+    /* iframe은 내용 높이만큼 길어서 fixed가 화면 밖에 놓인다. 부모 화면 가운데에 맞춰 둔다 */
+    if (embedded && viewport) {
+      pop.classList.add('in-frame');
+      var top = -viewport.iframeTop + Math.max(16, (viewport.viewportHeight - popCard.offsetHeight) / 2);
+      popCard.style.top = Math.max(16, Math.min(top, page.offsetHeight - popCard.offsetHeight - 16)) + 'px';
+    }
+    $('.tip-pop-close', pop).focus();
+  }
+  function closePop() {
+    if (pop.hidden) return;
+    pop.hidden = true;
+    $('.tip-pop-body', pop).innerHTML = '';
+    if (popBtn) popBtn.focus();
+  }
+  pop.addEventListener('click', function (e) { if (e.target === pop || e.target.closest('.tip-pop-close')) closePop(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); });
+
   var hoverable = window.matchMedia('(hover: hover) and (pointer: fine)');
   C.options.forEach(function (o) {
     if (!o.tip) return;
@@ -219,12 +264,20 @@
     l.addEventListener('mouseleave', hideTip);
     inputs[o.id].addEventListener('focus', function () { if (inputs[o.id].matches(':focus-visible')) showTip(o, l); });
     inputs[o.id].addEventListener('blur', hideTip);
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tip-btn';
+    btn.textContent = '?';
+    btn.setAttribute('aria-label', o.label + ' 미리보기');
+    btn.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); openPop(o, btn); });
+    /* 제목 마지막 단어와 붙여 「?」만 다음 줄로 떨어지지 않게 */
+    var title = $('.opt-text b', l), cut = o.label.lastIndexOf(' ') + 1, tail = document.createElement('span');
+    tail.className = 'tip-nowrap';
+    tail.textContent = o.label.slice(cut);
+    tail.appendChild(btn);
+    title.textContent = o.label.slice(0, cut);
+    title.appendChild(tail);
   });
-  /* 이미지가 늦게 뜨면 높이가 바뀌니 다시 맞춘다 */
-  tip.addEventListener('load', function () {
-    var o = tipFor && C.options.filter(function (x) { return x.id === tipFor; })[0];
-    if (o && tip.classList.contains('is-on')) showTip(o, $('.opt', groups[o.id]));
-  }, true);
 
   /* 금액 구간 편집: 정해진 경계(bounds)로 나뉜 바 위에서 구간 시작점을 드래그해 옮긴다.
      0원~첫 구간 미만은 기본 카드, 구간을 더할 때마다 카드 하나 */

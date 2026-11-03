@@ -493,8 +493,10 @@ a.credit:hover b { text-decoration: underline; }
 .opt-tip.is-below { transform: translateY(-6px); }
 .opt-tip.is-below.is-on { transform: none; }
 .opt-tip.is-below::after { bottom: auto; top: -9px; border-width: 2px 0 0 2px; }
+.opt-tip.is-wide { width: min(560px, calc(100% - 16px)); }
+.tip-row { display: flex; align-items: center; gap: 8px; }
+.tip-row .tip-media { flex: 1 1 0; min-width: 0; }
 .tip-media { display: block; width: 100%; height: auto; border-radius: 10px; }
-.tip-media + .tip-media { margin-top: 4px; }
 video.tip-media { background: #fff; border: 2px solid var(--ink); }
 .tip-text { margin: 8px 2px 0; font-size: 13px; font-weight: 600; line-height: 1.45; text-align: center; }
 .tip-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
@@ -507,7 +509,20 @@ video.tip-media { background: #fff; border: 2px solid var(--ink); }
 .tip-random span { display: grid; place-items: center; width: 30px; height: 30px; border: 2px dashed var(--ink); border-radius: 8px; background: var(--paper); font-size: 16px; color: var(--purple); }
 .tip-random span.wide { width: auto; height: auto; padding: 4px 8px; font-size: 12px; }
 .tip-random small { margin-left: auto; font-weight: 700; color: var(--purple); }
-.tip-chat img.tip-media { width: 74%; }
-.tip-chat img.tip-media + img.tip-media { margin-top: -10px; }
-.tip-chat img.tip-media:nth-of-type(2) { margin-left: auto; }
+
+/* 폰: 옵션 칸의 「?」 버튼 → 팝업(app.js openPop). 팝업은 이미지를 세로로 쌓는다 */
+.tip-nowrap { white-space: nowrap; }
+.tip-btn { display: none; width: 22px; height: 22px; margin-left: 6px; padding: 0; border: 2px solid var(--ink); border-radius: 50%; background: var(--paper); font: 700 12px/1 var(--body); color: var(--ink); vertical-align: 1px; cursor: pointer; }
+@media (hover: none), (pointer: coarse) { .tip-btn { display: inline-grid; place-items: center; } }
+.tip-pop { position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 16px; background: rgba(30, 20, 60, .45); }
+.tip-pop[hidden] { display: none; }
+.tip-pop.in-frame { position: absolute; display: block; }
+.tip-pop-card { position: relative; width: min(340px, 100%); max-height: calc(100vh - 32px); overflow-y: auto; padding: 14px 12px 12px; border: var(--line); border-radius: 18px; background: var(--paper); box-shadow: 4px 4px 0 var(--ink); }
+.tip-pop.in-frame .tip-pop-card { position: absolute; left: 50%; translate: -50% 0; max-height: none; }
+.tip-pop-title { display: block; margin: 0 34px 10px 2px; font-size: 15px; }
+.tip-pop-close { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; padding: 0; border: 2px solid var(--ink); border-radius: 50%; background: var(--cream); font: 700 16px/1 var(--body); color: var(--ink); cursor: pointer; }
+.tip-pop .tip-row { flex-direction: column; align-items: stretch; gap: 6px; }
+.tip-pop .tip-row .tip-media { flex: none; }
+.tip-pop .tip-chat .tip-row img.tip-media { width: 78%; }
+.tip-pop .tip-chat .tip-row img.tip-media:nth-of-type(2) { align-self: flex-end; }
 @media (prefers-reduced-motion: reduce) { .opt-tip, .opt-tip.is-on { transition: none; transform: none; } }
