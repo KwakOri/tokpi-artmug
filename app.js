@@ -100,7 +100,17 @@
   var TBD = '가격 준비 중';
   var ASK = '별도 문의';
   var state = {};
-  C.options.forEach(function (o) { state[o.id] = !!o.on; });
+  var tiers = {}; /* 금액 구간 옵션: 구간 시작 금액(원) 목록 */
+  C.options.forEach(function (o) {
+    state[o.id] = !!o.on;
+    if (o.kind === 'tier') tiers[o.id] = (o.tiers || []).slice();
+  });
+  var man = function (n) { return n % 10000 ? won(n) : (n / 10000).toLocaleString('ko-KR') + '만 원'; };
+  function tierCost(o) { return o.value == null ? null : o.value * tiers[o.id].length; }
+  function tierRanges(o) {
+    var t = tiers[o.id].slice().sort(function (a, b) { return a - b; });
+    return t.map(function (v, i) { return man(v) + (t[i + 1] ? '~' + man(t[i + 1]) + ' 미만' : ' 이상'); });
+  }
 
   $$('[data-revision]').forEach(function (el) { el.textContent = C.revision; });
 
@@ -119,14 +129,19 @@
   $('#baseItems').innerHTML = C.base.items.concat(['수정 ' + C.revision + '회']).map(function (i) { return '<li>' + i + '</li>'; }).join('');
   $('#basePrice').innerHTML = (C.base.price == null ? TBD : promo ? '<s>' + won(C.base.price) + '</s> ' + won(promoPrice(C.base.price)) + ' <small class="base-promo">' + promo.tag + ' ' + promo.percent + '% 할인</small>' : won(C.base.price));
 
-  function optPrice(o) {
+  /* 옵션 칸의 가격 표시. 고른 구성 목록에는 picked가 true로 와서 실제 더해지는 금액을 쓴다 */
+  function optPrice(o, picked) {
     if (o.ask) return ASK;
     if (o.value == null) return TBD;
+    if (o.kind === 'tier') return picked ? '+' + won(tierCost(o)) : '구간당 +' + won(o.value);
     return o.kind === 'percent' ? '+' + o.value + '%' : '+' + won(o.value);
   }
 
   var inputs = {};
+  var groups = {};
   C.options.forEach(function (o) {
+    var g = document.createElement('div');
+    g.className = 'opt-group';
     var l = document.createElement('label');
     l.className = 'opt';
     l.innerHTML = '<span class="opt-text"><b>' + o.label + '</b><small>' + o.note + '</small></span>' +
@@ -135,17 +150,72 @@
     input.checked = state[o.id];
     input.addEventListener('change', function () { setOpt(o.id, input.checked); });
     inputs[o.id] = input;
-    $(o.preview || o.design ? '#visualOpts' : '#extraOpts').appendChild(l);
+    g.appendChild(l);
+    if (o.kind === 'tier') g.appendChild(tierEditor(o));
+    groups[o.id] = g;
+    if (o.parent && groups[o.parent]) {
+      var kids = $('.opt-children', groups[o.parent]);
+      if (!kids) {
+        kids = document.createElement('div');
+        kids.className = 'opt-children';
+        groups[o.parent].appendChild(kids);
+      }
+      kids.appendChild(g);
+    } else {
+      $(o.preview || o.design ? '#visualOpts' : '#extraOpts').appendChild(g);
+    }
   });
+
+  /* 금액 구간 편집: 0원~첫 구간 미만은 기본 카드, 구간을 더할 때마다 카드 하나 */
+  function tierEditor(o) {
+    var box = document.createElement('div');
+    box.className = 'tier-box';
+    function draw() {
+      var t = tiers[o.id].slice().sort(function (a, b) { return a - b; });
+      tiers[o.id] = t;
+      var html = '<p class="tier-row is-base"><span>0원~' + (t[0] ? man(t[0]) + ' 미만' : '') + '</span><em>기본 카드</em></p>';
+      t.forEach(function (v, i) {
+        html += '<p class="tier-row"><label><input type="number" min="1" step="1" inputmode="numeric" value="' + v / 10000 + '" data-i="' + i + '" aria-label="구간 ' + (i + 1) + ' 시작 금액(만 원)"> 만 원 이상' +
+          (t[i + 1] ? ' ~ ' + man(t[i + 1]) + ' 미만' : '') + '</label><em>+' + won(o.value || 0) + '</em>' +
+          '<button type="button" class="tier-del" data-i="' + i + '" aria-label="구간 ' + (i + 1) + ' 빼기">×</button></p>';
+      });
+      if (t.length < (o.maxTiers || 4)) html += '<button type="button" class="tier-add">+ 구간 추가</button>';
+      box.innerHTML = html;
+    }
+    box.addEventListener('change', function (e) {
+      var i = e.target.getAttribute('data-i');
+      if (i == null) return;
+      var v = Math.round(parseFloat(e.target.value) * 10000);
+      var t = tiers[o.id];
+      if (v > 0 && t.indexOf(v) < 0) t[i] = v;
+      draw(); render();
+    });
+    box.addEventListener('click', function (e) {
+      var t = tiers[o.id];
+      if (e.target.classList.contains('tier-add')) {
+        var last = t.length ? t[t.length - 1] : 0;
+        t.push(last ? last * 10 : 10000);
+      } else if (e.target.classList.contains('tier-del')) {
+        t.splice(+e.target.getAttribute('data-i'), 1);
+        if (!t.length) { setOpt(o.id, false); t.push(10000); }
+      } else return;
+      draw(); render();
+    });
+    draw();
+    return box;
+  }
 
   function setOpt(id, on) {
     state[id] = on;
     C.options.forEach(function (o) {
-      if (on && o.id === id && o.needs) state[o.needs] = true;
-      if (!on && o.needs === id) state[o.id] = false;
+      if (on && o.id === id && o.parent) state[o.parent] = true;
+      if (!on && o.parent === id) state[o.id] = false;
     });
-    C.options.forEach(function (o) { inputs[o.id].checked = state[o.id]; });
-    var visual = C.options.some(function (o) { return o.preview && (o.id === id || o.needs === id); });
+    C.options.forEach(function (o) {
+      inputs[o.id].checked = state[o.id];
+      groups[o.id].classList.toggle('is-on', state[o.id]);
+    });
+    var visual = C.options.some(function (o) { return o.preview && (o.id === id || o.parent === id); });
     if (visual) sendPreview();
     shakeStage();
     render();
@@ -191,7 +261,9 @@
   var picked = null;
   function pickRows(opts) {
     var rows = [{ base: true, label: C.base.name, sub: C.base.items.concat(['수정 ' + C.revision + '회']).join(' · '), price: C.base.price == null ? TBD : won(C.base.price) }];
-    return rows.concat(opts.map(function (o) { return { label: o.label, price: optPrice(o) }; }));
+    return rows.concat(opts.map(function (o) {
+      return { label: o.label, sub: o.kind === 'tier' ? tierRanges(o).join(' · ') : '', price: optPrice(o, true) };
+    }));
   }
 
   function render() {
@@ -201,7 +273,7 @@
     opts.forEach(function (o) {
       if (o.ask) return;
       if (total == null || o.value == null) { total = null; return; }
-      if (o.kind === 'percent') pct += o.value; else total += o.value;
+      if (o.kind === 'percent') pct += o.value; else total += o.kind === 'tier' ? tierCost(o) : o.value;
     });
     if (total != null) total += Math.round(total * pct / 100);
     var full = total;
@@ -211,12 +283,10 @@
     $('#sumWas').textContent = full == null ? '' : won(full);
     $('#sumWas').hidden = !promo || full == null;
 
-    var days = C.base.days;
-    opts.forEach(function (o) { days += o.days || 0; });
     var rush = opts.filter(function (o) { return o.deadline; })[0];
 
     var totalText = total == null ? TBD : won(total) + (asked ? ' + ' + ASK : '');
-    var daysText = rush ? rush.deadline : '작업 기간 약 ' + days + '일';
+    var daysText = rush ? rush.deadline : '';
     var rows = pickRows(opts);
     if (promo) rows.push({ promo: true, label: promo.title, price: full == null ? '-' + promo.percent + '%' : '-' + won(full - total) });
     $('#pickList').innerHTML = rows.map(function (r) {
@@ -228,6 +298,7 @@
     sendHeight(false);
   }
 
+  C.options.forEach(function (o) { groups[o.id].classList.toggle('is-on', state[o.id]); });
   render();
 
   /* ---------- 슬롯: 구글 시트 「공개」 탭 CSV ---------- */
@@ -334,7 +405,7 @@
       '[고른 구성]',
     ];
     picked.rows.forEach(function (r) { lines.push('- ' + r.label + (r.sub ? ' (' + r.sub + ')' : '') + ' ' + r.price); });
-    lines.push('예상 견적: ' + picked.total + ' · ' + picked.days, '');
+    lines.push('예상 견적: ' + picked.total + (picked.days ? ' · ' + picked.days : ''), '');
     lines.push(
       '원하는 분위기: ' + v('mood'),
       '메인 색: ' + v('color'),
