@@ -111,13 +111,13 @@
   if (promo) {
     $$('[data-promo]').forEach(function (el) { el.textContent = promo[el.getAttribute('data-promo')] || ''; });
     $('#promoHero').hidden = false;
-    $('#sumPromo').textContent = promo.percent + '% 할인 적용';
+    $('#sumPromo').textContent = promo.tag + ' ' + promo.percent + '% 할인 적용';
     $('#sumPromo').hidden = false;
   }
 
   $('#baseName').textContent = C.base.name;
   $('#baseItems').innerHTML = C.base.items.concat(['수정 ' + C.revision + '회']).map(function (i) { return '<li>' + i + '</li>'; }).join('');
-  $('#basePrice').innerHTML = (C.base.price == null ? TBD : promo ? '<s>' + won(C.base.price) + '</s> ' + won(promoPrice(C.base.price)) : won(C.base.price));
+  $('#basePrice').innerHTML = (C.base.price == null ? TBD : promo ? '<s>' + won(C.base.price) + '</s> ' + won(promoPrice(C.base.price)) + ' <small class="base-promo">' + promo.tag + ' ' + promo.percent + '% 할인</small>' : won(C.base.price));
 
   function optPrice(o) {
     if (o.ask) return ASK;
@@ -218,7 +218,7 @@
     var totalText = total == null ? TBD : won(total) + (asked ? ' + ' + ASK : '');
     var daysText = rush ? rush.deadline : '작업 기간 약 ' + days + '일';
     var rows = pickRows(opts);
-    if (promo) rows.push({ promo: true, label: promo.tag + ' ' + promo.title, price: full == null ? '-' + promo.percent + '%' : '-' + won(full - total) });
+    if (promo) rows.push({ promo: true, label: promo.title, price: full == null ? '-' + promo.percent + '%' : '-' + won(full - total) });
     $('#pickList').innerHTML = rows.map(function (r) {
       return '<li' + (r.base ? ' class="is-base"' : r.promo ? ' class="is-promo"' : '') + '><span><b>' + r.label + '</b>' + (r.sub ? '<small>' + r.sub + '</small>' : '') + '</span><em>' + r.price + '</em></li>';
     }).join('');
@@ -290,7 +290,7 @@
     sections = $$('.nav-links a').map(function (a) { return document.getElementById(a.getAttribute('data-go')); });
     var first = list.filter(function (s) { return s.kind === 'open'; })[0];
     var badge = $('#slotBadge');
-    badge.textContent = first ? first.label.replace(/<\/?small>/g, '').replace('년', '년 ') + ' 슬롯 ' + first.left + '자리 남음' + (promo && first.month === promo.month ? ' · ' + promo.percent + '% 할인 중' : '') : '이번 슬롯은 마감됐어요';
+    badge.textContent = first ? first.label.replace(/<\/?small>/g, '').replace('년', '년 ') + ' 슬롯 ' + first.left + '자리 남음' + (promo && first.month === promo.month ? ' · ' + promo.tag + ' ' + promo.percent + '% 할인 중' : '') : '이번 슬롯은 마감됐어요';
     badge.classList.toggle('is-full', !first);
     badge.hidden = false;
     sendHeight(true);

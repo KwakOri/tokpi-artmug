@@ -88,7 +88,7 @@ p { margin: 0; }
 .hero {
   position: relative;
   display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center;
-  padding: 40px 56px 64px;
+  padding: 40px 56px 20px;
 }
 .badge {
   display: inline-block; font-weight: 700; font-size: 14px;
@@ -144,6 +144,9 @@ p { margin: 0; }
 .sec-lilac { background: var(--lilac-bg); border-block: var(--line); }
 .sec-night { background: var(--night); color: var(--paper); }
 .sec-head { text-align: center; margin-bottom: 40px; }
+/* 첫 화면 바로 아래 미리보기는 위 여백을 줄인다 */
+.hero + .sec { padding-top: 36px; }
+#preview .sec-head { margin-bottom: 28px; }
 .kicker {
   display: inline-block; font-family: var(--display); font-size: 15px; letter-spacing: .08em;
   color: var(--purple); background: var(--paper); border: 2px solid var(--ink); border-radius: 999px;
@@ -385,7 +388,7 @@ a.credit:hover b { text-decoration: underline; }
 .promo small { flex-basis: 100%; font-size: 14px; font-weight: 600; }
 .base-price s, .sum-was { color: var(--muted); font-weight: 600; }
 .sum-was { color: var(--on-night); font-size: 16px; opacity: .8; }
-.sum-promo { margin-left: 6px; font-size: 12px; font-weight: 700; color: var(--ink); background: var(--orange); border-radius: 999px; padding: 2px 9px; }
+.sum-promo, .base-promo { margin-left: 6px; font-size: 12px; font-weight: 700; color: var(--ink); background: var(--orange); border-radius: 999px; padding: 2px 9px; }
 .pick-list li.is-promo { background: #ffe0c7; }
 .pick-list li.is-promo em { color: var(--orange); }
 .slot-sale {
@@ -399,7 +402,8 @@ a.credit:hover b { text-decoration: underline; }
 @media (max-width: 980px) {
   .nav-links { display: none; }
   .nav-cta { margin-left: auto; }
-  .hero { grid-template-columns: 1fr; padding: 28px 28px 52px; text-align: center; }
+  .hero { grid-template-columns: 1fr; padding: 28px 28px 16px; text-align: center; }
+  .hero + .sec { padding-top: 32px; }
   .hero .tags, .hero-btns { justify-content: center; }
   .hero-art { width: 100%; max-width: 380px; margin: 0 auto; }
   .promo { margin: 18px auto 0; justify-content: center; }
