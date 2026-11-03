@@ -109,7 +109,7 @@
   window.addEventListener('resize', fitPreviews);
   fitPreviews();
 
-  /* ---------- 구성·가격: 기본 구성 + 옵션, 왼쪽 미리보기 ---------- */
+  /* ---------- 구성·가격: 기본 구성 + 옵션, 미리보기 ---------- */
   var won = function (n) { return n.toLocaleString('ko-KR') + '원'; };
   var TBD = '가격 준비 중';
   var ASK = '별도 문의';
