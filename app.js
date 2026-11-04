@@ -209,7 +209,7 @@
   var tipFor = null, tipLabel = null;
   function tipBody(t) {
     var media = '';
-    if (t.video) media += '<video class="tip-media" width="320" height="268" autoplay muted loop playsinline poster="' + t.video + '.jpg"><source src="' + t.video + '.webm" type="video/webm"><source src="' + t.video + '.mp4" type="video/mp4"></video>';
+    if (t.video) media += '<video class="tip-media" width="320" height="262" autoplay muted loop playsinline poster="' + t.video + '.jpg"><source src="' + t.video + '.webm" type="video/webm"><source src="' + t.video + '.mp4" type="video/mp4"></video>';
     [].concat(t.img || []).forEach(function (src) { media += '<img class="tip-media" src="' + src + '" alt="">'; });
     var html = media ? '<div class="tip-row">' + media + '</div>' : '';
     if (t.html) html += t.html;
@@ -427,7 +427,7 @@
     if (frame.contentWindow) frame.contentWindow.postMessage({ type: 'TOKPI_PREVIEW_OPTS', opts: previewOpts() }, '*');
   }
   var p0 = previewOpts();
-  frame.src = 'assets/live/miruru.html?v=1&' + Object.keys(p0).map(function (k) { return k + '=' + (p0[k] ? 1 : 0); }).join('&');
+  frame.src = 'assets/live/miruru.html?v=2&' + Object.keys(p0).map(function (k) { return k + '=' + (p0[k] ? 1 : 0); }).join('&');
   frame.addEventListener('load', sendPreview);
   if ('ResizeObserver' in window) new ResizeObserver(fitStage).observe(stage);
   window.addEventListener('resize', fitStage);
