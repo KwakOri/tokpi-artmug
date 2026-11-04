@@ -307,10 +307,11 @@ location.search.replace(/[?&](cards|roles|fx|tiers|random)=([01])/g,function(_,k
 function pool(){return cards.filter(function(c){return opt.cards||c.indexOf(' image ')<0;});}
 function sheets(){var on={'sk-fx':opt.fx,'sk-tier':opt.tiers,'sk-rand':opt.random,'sk-egg':opt.random};for(var id in on)document.getElementById(id).media=on[id]?'all':'not all';}
 function add(){var p=pool(),t=document.createElement('template'),h=p[n++%p.length];
-if(!still&&/image chzzk/.test(h)&&!/donation_100000/.test(h))h=h.replace(/randr_\d cloud_\d/,Math.random()<.5?'randr_4 cloud_0':'randr_0 cloud_1');/* 일반 후원은 반반 확률로 특급 처방전 */
+if(!still&&/image chzzk/.test(h)&&!/donation_100000/.test(h))h=h.replace(/randr_\d cloud_\d/,(egg=!egg)?'randr_0 cloud_1':'randr_4 cloud_0');/* 일반 후원은 일반 처방전·특급 처방전 번갈아 */
 if(!opt.roles)h=h.replace(/chat_box naver chat (streamer|subscribe)/,'chat_box naver chat').replace(/<span class="icon_badge[^"]*"><\/span>/,'');
 t.innerHTML=h;list.appendChild(t.content.firstElementChild);while(list.children.length>8)list.removeChild(list.firstElementChild);}
-function start(){clearInterval(timer);sheets();list.innerHTML='';n=0;add();timer=setInterval(add,1500);}
+var egg=false;
+function start(){clearInterval(timer);sheets();list.innerHTML='';n=0;egg=false;add();timer=setInterval(add,1500);}
 window.addEventListener('message',function(e){var d=e.data||{};if(d.type!=='TOKPI_PREVIEW_OPTS')return;for(var k in opt)if(k in d.opts)opt[k]=!!d.opts[k];start();});
 if(/[?&]still=1/.test(location.search)){document.documentElement.classList.add('still');sheets();while(n<4)add();return;}
 start();})();</script></body></html>
