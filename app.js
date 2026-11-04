@@ -209,12 +209,17 @@
   var tipFor = null, tipLabel = null;
   function tipBody(t) {
     var media = '';
-    if (t.video) media += '<video class="tip-media" width="320" height="262" autoplay muted loop playsinline poster="' + t.video + '.jpg"><source src="' + t.video + '.webm" type="video/webm"><source src="' + t.video + '.mp4" type="video/mp4"></video>';
+    if (t.video) media += '<video class="tip-media" width="900" height="738" autoplay muted loop playsinline poster="' + t.video + '.jpg"><source src="' + t.video + '.webm" type="video/webm"><source src="' + t.video + '.mp4" type="video/mp4"></video>';
     [].concat(t.img || []).forEach(function (src) { media += '<img class="tip-media" src="' + src + '" alt="">'; });
     var html = media ? '<div class="tip-row">' + media + '</div>' : '';
     if (t.html) html += t.html;
     if (t.text) html += '<p class="tip-text">' + t.text + '</p>';
     return html;
+  }
+  /* innerHTML로 넣은 영상은 폰에서 autoplay가 안 걸릴 때가 있어 직접 튼다 */
+  function playTip(box) {
+    var v = $('video', box);
+    if (v) { v.muted = true; var r = v.play(); if (r && r.catch) r.catch(function () {}); }
   }
   function tipClass(base, t) {
     var n = [].concat(t.img || []).length + (t.video ? 1 : 0);
@@ -236,6 +241,7 @@
   }
   function showTip(o, l) {
     if (tipFor !== o.id) { tip.innerHTML = tipBody(o.tip); tip.className = tipClass('opt-tip', o.tip); tipFor = o.id; }
+    playTip(tip);
     tip.classList.add('is-on');
     l.setAttribute('aria-describedby', 'optTip');
     tipLabel = l;
@@ -256,6 +262,7 @@
   function openPop(o, btn) {
     $('.tip-pop-title', pop).textContent = o.label;
     $('.tip-pop-body', pop).innerHTML = tipBody(o.tip);
+    playTip(pop);
     popCard.className = tipClass('tip-pop-card', o.tip);
     pop.hidden = false;
     popBtn = btn;
