@@ -428,7 +428,7 @@ a.credit:hover b { text-decoration: underline; }
 /* ---------- mobile ---------- */
 @media (max-width: 560px) {
   body { font-size: 15px; }
-  .nav { padding: 8px 10px; }
+  .nav { display: none; } /* 모바일에서는 상단 바(로고·신청 양식)를 숨긴다 */
   .brand { font-size: 19px; }
   .hero h1 { font-size: 40px; }
   .promo b { font-size: 22px; }
