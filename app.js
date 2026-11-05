@@ -306,8 +306,8 @@
     title.appendChild(tail);
   });
 
-  /* 금액 구간 편집: 정해진 경계(bounds)로 나뉜 바 위에서 구간 시작점을 드래그해 옮긴다.
-     0원~첫 구간 미만은 기본 카드, 구간을 더할 때마다 카드 하나 */
+  /* 금액 구간 편집: 정해진 경계(bounds)마다 토글이 하나씩 있고, 켜면 그 금액에서 구간이 나뉜다.
+     처음엔 나뉜 데가 없고(전부 기본 카드), 나눌 때마다 카드 하나 */
   function tierEditor(o) {
     var B = o.bounds;
     var box = document.createElement('div');
@@ -321,65 +321,24 @@
       var html = '';
       edges.forEach(function (v, k) {
         var g = t.filter(function (c) { return c <= v; }).length; /* 이 칸이 속한 구간 번호(0은 기본 카드) */
-        html += '<span class="tier-cell g' + (g % 4) + '">' + (k ? short(v) : '0') + (B[k] ? '~' + short(B[k]) : '~') + '</span>';
-      });
-      t.forEach(function (v) {
-        var j = B.indexOf(v) + 1;
-        html += '<button type="button" class="tier-handle" data-v="' + v + '" style="left:' + (j * 100 / edges.length) + '%" aria-label="' + man(v) + ' 경계, 드래그해서 옮기기"></button>';
+        html += '<span class="tier-cell g' + (g % 4) + (k && t.indexOf(v) >= 0 ? ' is-cut' : '') + '">' + (k ? short(v) : '0') + (B[k] ? '~' + short(B[k]) : '~') + '</span>';
       });
       bar.innerHTML = html;
       var rows = '<p class="tier-row is-base"><span>0원~' + (t[0] ? man(t[0]) + ' 미만' : '') + '</span><em>기본 카드</em></p>';
-      tierRanges(o).forEach(function (r, i) {
-        rows += '<p class="tier-row"><span><i class="tier-dot g' + ((i + 1) % 4) + '"></i>' + r + '</span><em>+' + won(o.value || 0) + '</em>' +
-          '<button type="button" class="tier-del" data-i="' + i + '" aria-label="' + r + ' 구간 빼기">×</button></p>';
+      B.forEach(function (v) {
+        var on = t.indexOf(v) >= 0, g = t.filter(function (c) { return c <= v; }).length;
+        rows += '<label class="tier-row tier-toggle' + (on ? ' is-on' : '') + '"><span>' + (on ? '<i class="tier-dot g' + (g % 4) + '"></i>' : '') + man(v) + '부터 따로</span>' +
+          '<em>' + (on ? '+' + won(o.value || 0) : '') + '</em>' +
+          '<span class="switch"><input type="checkbox" role="switch" data-v="' + v + '"' + (on ? ' checked' : '') + ' aria-label="' + man(v) + '부터 구간 나누기"><span class="slider"></span></span></label>';
       });
-      if (t.length < B.length) rows += '<button type="button" class="tier-add">+ 구간 추가</button>';
       list.innerHTML = rows;
     }
-    /* 드래그: 바에 포인터를 붙잡아 두고, 가장 가까운 빈 경계로 옮긴다 */
-    var drag = null;
-    bar.addEventListener('pointerdown', function (e) {
-      if (!e.target.classList.contains('tier-handle')) return;
-      drag = +e.target.getAttribute('data-v');
-      bar.setPointerCapture(e.pointerId);
-      bar.classList.add('is-drag');
-      e.preventDefault();
-    });
-    bar.addEventListener('pointermove', function (e) {
-      if (drag == null) return;
-      var r = bar.getBoundingClientRect();
-      var j = Math.round((e.clientX - r.left) / r.width * (B.length + 1)) - 1;
-      var v = B[Math.max(0, Math.min(B.length - 1, j))];
-      var t = tiers[o.id];
-      if (v === drag || t.indexOf(v) >= 0) return;
-      t[t.indexOf(drag)] = v;
-      drag = v;
+    list.addEventListener('change', function (e) {
+      var v = +e.target.getAttribute('data-v'), t = tiers[o.id];
+      if (!v) return;
+      if (e.target.checked) { if (t.indexOf(v) < 0) t.push(v); } else t.splice(t.indexOf(v), 1);
       draw(); render();
-    });
-    function drop() { drag = null; bar.classList.remove('is-drag'); }
-    bar.addEventListener('pointerup', drop);
-    bar.addEventListener('pointercancel', drop);
-    /* 키보드: 손잡이에서 ←→로 옮긴다 */
-    bar.addEventListener('keydown', function (e) {
-      var d = e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowRight' ? 1 : 0;
-      if (!d || !e.target.classList.contains('tier-handle')) return;
-      var from = +e.target.getAttribute('data-v'), t = tiers[o.id];
-      var v = B[B.indexOf(from) + d];
-      if (v == null || t.indexOf(v) >= 0) return;
-      t[t.indexOf(from)] = v;
-      draw(); render();
-      $('.tier-handle[data-v="' + v + '"]', bar).focus();
-      e.preventDefault();
-    });
-    list.addEventListener('click', function (e) {
-      var t = tiers[o.id];
-      if (e.target.classList.contains('tier-add')) {
-        t.push(B.filter(function (v) { return t.indexOf(v) < 0; })[0]);
-      } else if (e.target.classList.contains('tier-del')) {
-        t.splice(+e.target.getAttribute('data-i'), 1);
-        if (!t.length) { setOpt(o.id, false); t.push(B[0]); }
-      } else return;
-      draw(); render();
+      $('input[data-v="' + v + '"]', list).focus();
     });
     draw();
     return box;
@@ -444,7 +403,7 @@
   function pickRows(opts) {
     var rows = [{ base: true, label: C.base.name, sub: C.base.items.concat(['수정 ' + C.revision + '회']).join(' · '), price: C.base.price == null ? TBD : won(C.base.price) }];
     return rows.concat(opts.map(function (o) {
-      return { label: o.label, sub: o.kind === 'tier' ? tierRanges(o).join(' · ') : '', price: optPrice(o, true) };
+      return { label: o.label, sub: o.kind === 'tier' ? tierRanges(o).join(' · ') || '아직 구간을 나누지 않았어요' : '', price: optPrice(o, true) };
     }));
   }
 

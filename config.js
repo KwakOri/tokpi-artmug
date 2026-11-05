@@ -15,8 +15,8 @@ window.TOKPI_CONFIG = {
    * preview: 켜고 끌 때 미리보기(assets/live/miruru.html)에 넘기는 값.
    * design: true면 미리보기 값이 없어도 위쪽 「디자인 옵션」에 놓인다. preview도 design도 없으면 「그 밖의 옵션」.
    * kind: 'won'은 금액을 더하고, 'percent'는 나머지 합계에 비율을 더한다.
-   *   'tier'는 금액 구간 옵션: tiers(구간 시작 금액, 원)마다 value를 더한다. 0원~첫 구간 미만은 기본 카드라 값에 안 들어간다.
-   *   bounds: 플랫폼에서 고를 수 있는 구간 경계(원). 구간 시작 금액은 이 중에서만 고른다(경계 3개 → 바 네 칸).
+   *   'tier'는 금액 구간 옵션: tiers(구간 시작 금액, 원)마다 value를 더한다. 0원~첫 구간 미만은 기본 카드라 값에 안 들어간다. 처음엔 비워 둔다(나뉜 데 없음).
+   *   bounds: 플랫폼에서 고를 수 있는 구간 경계(원). 경계마다 토글이 하나씩 생기고, 켜면 그 금액에서 나뉜다(경계 3개 → 바 네 칸).
    * deadline: 켜면 고른 구성 아래에 보여 줄 마감 문구. 작업 기간은 슬롯에 따라 정해져서 따로 적지 않는다.
    * parent: 이 옵션이 들어가는 상위 옵션. 상위 옵션 아래에 들여 써서 보이고, 켜면 상위 옵션도 켜지고, 상위를 끄면 같이 꺼진다.
    * pair: 같은 값끼리 칸 하나(제목은 아래 pairs)에 묶여 버튼처럼 나란히 놓이고, 하나만 고를 수 있다. short: 그 안에 보일 짧은 이름.
@@ -28,16 +28,19 @@ window.TOKPI_CONFIG = {
   options: [
     { id: 'cards', label: '구독·후원 카드', preview: 'cards', on: true, kind: 'won', value: 30000, tip: { text: '구독·후원이 오면 이런 카드가 떠요', img: ['assets/tips/sub.webp?v=3', 'assets/tips/don.webp?v=3'] } },
     { id: 'fx', label: '구독·후원 화려한 연출', preview: 'fx', parent: 'cards', kind: 'won', value: 20000, tip: { text: '카드가 뜰 때 특별한 등장 연출이 더해져요', video: 'assets/tips/fx-v5' } },
-    { id: 'tiers', label: '금액별 후원 카드', preview: 'tiers', parent: 'cards', kind: 'tier', value: 30000, tiers: [10000], bounds: [10000, 100000, 1000000], tip: { text: '구간마다 카드 디자인이 하나씩 늘어요', html: '<div class="tip-tiers"><span class="g0"><b>기본 카드</b>0원~</span><span class="g1"><b>카드 2</b>1만 원~</span><span class="g2"><b>카드 3</b>10만 원~</span></div>' } },
+    { id: 'tiers', label: '금액별 후원 카드', preview: 'tiers', parent: 'cards', kind: 'tier', value: 30000, tiers: [], bounds: [10000, 100000, 1000000], tip: { text: '구간마다 카드 디자인이 하나씩 늘어요', html: '<div class="tip-tiers"><span class="g0"><b>기본 카드</b>0원~</span><span class="g1"><b>카드 2</b>1만 원~</span><span class="g2"><b>카드 3</b>10만 원~</span></div>' } },
     { id: 'roles', label: '스트리머·구독자 채팅 따로', preview: 'roles', on: true, kind: 'won', value: 30000, tip: { cls: 'tip-chat', text: '시청자·스트리머·구독자마다 이름표와 말풍선이 달라요', img: ['assets/tips/viewer.webp?v=3', 'assets/tips/streamer.webp?v=3', 'assets/tips/subchat.webp?v=3'] } },
     { id: 'random', label: '랜덤 요소 추가', preview: 'random', ask: true, tip: { text: '같은 채팅도 올 때마다 조금씩 달라요', html: '<div class="tip-random"><p><b>장식 랜덤</b><span>★</span><span>♥</span><span>✦</span><small>장식 하나당 +1만 원</small></p><p><b>카드 통째로 랜덤·이스터에그</b><span class="wide">가끔 전혀 다른 깜짝 카드가 떠요</span><small>+2~3만 원 선</small></p></div>' } },
-    { id: 'rush', label: '빠른 마감', kind: 'percent', value: 50, deadline: '결제일 기준 일주일 안에 완성' },
+    /* 빠른 마감은 세 단계 중 하나만 */
+    { id: 'rush3', label: '빠른 마감 3일 이내', short: '3일 이내', pair: 'rush', kind: 'percent', value: 200, deadline: '결제일 기준 3일 안에 완성' },
+    { id: 'rush7', label: '빠른 마감 7일 이내', short: '7일 이내', pair: 'rush', kind: 'percent', value: 100, deadline: '결제일 기준 7일 안에 완성' },
+    { id: 'rush14', label: '빠른 마감 2주 이내', short: '2주 이내', pair: 'rush', kind: 'percent', value: 50, deadline: '결제일 기준 2주 안에 완성' },
     { id: 'private', label: '포트폴리오 비공개', short: '비공개', pair: 'portfolio', kind: 'won', value: 30000 },
     /* 공개 미루기를 켜면 신청 양식에 「공개 희망일」 칸이 나온다 */
     { id: 'delay', label: '포트폴리오 공개 미루기', short: '공개 미루기', pair: 'portfolio', kind: 'won', value: 10000 },
   ],
   /* pair로 묶인 칸의 제목 */
-  pairs: { portfolio: '포트폴리오' },
+  pairs: { rush: '빠른 마감', portfolio: '포트폴리오' },
   /*
    * promo: 기간 한정 할인. month(한국 시간 기준 그달)에만 켜진다. 지나면 저절로 사라지니 지울 필요는 없다.
    * percent만큼 예상 견적 합계(빠른 마감 포함)를 깎고, 첫 화면 띠·기본 구성·견적·신청 양식·그달 슬롯에 할인 표시를 붙인다.
