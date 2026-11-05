@@ -552,7 +552,7 @@
     lines.push(
       '원하는 분위기: ' + v('mood'),
       '메인 색: ' + v('color'),
-      '로고·캐릭터: ' + v('assets'),
+      '캐릭터: ' + v('assets'),
       '참고 자료: ' + v('refs')
     );
     if (state.delay) lines.splice(lines.length - 1, 0, '공개 희망일: ' + v('delayDate'));
