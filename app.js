@@ -393,7 +393,7 @@
     if (frame.contentWindow) frame.contentWindow.postMessage({ type: 'TOKPI_PREVIEW_OPTS', opts: previewOpts() }, '*');
   }
   var p0 = previewOpts();
-  frame.src = 'assets/live/miruru.html?v=7&' + Object.keys(p0).map(function (k) { return k + '=' + (p0[k] ? 1 : 0); }).join('&');
+  frame.src = 'assets/live/miruru.html?v=8&' + Object.keys(p0).map(function (k) { return k + '=' + (p0[k] ? 1 : 0); }).join('&');
   frame.addEventListener('load', sendPreview);
   if ('ResizeObserver' in window) new ResizeObserver(fitStage).observe(stage);
   window.addEventListener('resize', fitStage);
