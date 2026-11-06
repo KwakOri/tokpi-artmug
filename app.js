@@ -541,8 +541,6 @@
     var v = function (n) { return (f.elements[n].value || '').trim() || '-'; };
     var lines = [
       '[tokpi 채팅창 주문제작 신청]',
-      '닉네임: ' + v('nick'),
-      '소셜 계정: ' + v('social'),
       '방송 플랫폼: ' + v('platform'),
       '',
       '[고른 구성]',
