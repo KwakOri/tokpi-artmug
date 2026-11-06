@@ -61,7 +61,7 @@ window.TOKPI_CONFIG = {
   credits: {
     witch: { name: '할로윈 이벤트', x: null, avatar: null },
     ghost: { name: '할로윈 이벤트', x: null, avatar: null },
-    miruru: { name: '시로우미 미루루', x: 'https://x.com/SiroumiMiruru', avatar: null },
+    miruru: { name: '시로우미 미루루', x: null, avatar: null },
   },
   /*
    * 슬롯: 구글 시트 「공개」 탭을 웹에 CSV로 게시한 주소(파일 > 공유 > 웹에 게시 > 공개 탭 · CSV).
