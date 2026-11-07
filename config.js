@@ -27,6 +27,7 @@ window.TOKPI_CONFIG = {
    */
   options: [
     { id: 'cards', label: '구독·후원 카드', preview: 'cards', kind: 'won', value: 30000, tip: { text: '구독·후원이 오면 이런 카드가 떠요', img: ['assets/tips/sub.webp?v=4', 'assets/tips/don.webp?v=4'] } },
+    { id: 'anim', label: '구독·후원 카드 애니메이션 추가', preview: 'fx', parent: 'cards', kind: 'won', value: 20000, tip: { text: '카드에 애니메이션을 추가합니다', video: ['assets/tips/fx-v6', 'assets/tips/gold-v1'] } },
     { id: 'tiers', label: '금액별 후원 카드', preview: 'tiers', parent: 'cards', kind: 'tier', value: 30000, tiers: [], bounds: [10000, 100000, 1000000], tip: { text: '구간마다 카드 디자인이 하나씩 늘어요', html: '<div class="tip-tiers"><span class="g0"><b>기본 카드</b>0원~</span><span class="g1"><b>카드 2</b>1만 원~</span><span class="g2"><b>카드 3</b>10만 원~</span></div>' } },
     { id: 'roles', label: '스트리머·구독자 채팅 따로', preview: 'roles', kind: 'won', value: 30000, tip: { cls: 'tip-chat', text: '시청자·스트리머·구독자마다 이름표와 말풍선이 달라요', img: ['assets/tips/viewer.webp?v=3', 'assets/tips/streamer.webp?v=3', 'assets/tips/subchat.webp?v=3'] } },
     { id: 'random', label: '랜덤 요소 추가', preview: 'random', ask: true, tip: { text: '같은 채팅도 올 때마다 조금씩 달라요', html: '<div class="tip-random"><p><b>장식 랜덤</b><span>★</span><span>♥</span><span>✦</span><small>장식 하나당 +1만 원</small></p><p><b>카드 통째로 랜덤·이스터에그</b><span class="wide">가끔 전혀 다른 깜짝 카드가 떠요</span><small>+2~3만 원 선</small></p></div>' } },

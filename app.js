@@ -209,7 +209,7 @@
   var tipFor = null, tipLabel = null;
   function tipBody(t) {
     var media = '';
-    if (t.video) media += '<video class="tip-media" width="900" height="738" autoplay muted loop playsinline poster="' + t.video + '.jpg"><source src="' + t.video + '.webm" type="video/webm"><source src="' + t.video + '.mp4" type="video/mp4"></video>';
+    [].concat(t.video || []).forEach(function (v) { media += '<video class="tip-media" width="900" height="738" autoplay muted loop playsinline poster="' + v + '.jpg"><source src="' + v + '.webm" type="video/webm"><source src="' + v + '.mp4" type="video/mp4"></video>'; });
     [].concat(t.img || []).forEach(function (src) { media += '<img class="tip-media" src="' + src + '" alt="">'; });
     var html = media ? '<div class="tip-row">' + media + '</div>' : '';
     if (t.html) html += t.html;
@@ -218,11 +218,10 @@
   }
   /* innerHTML로 넣은 영상은 폰에서 autoplay가 안 걸릴 때가 있어 직접 튼다 */
   function playTip(box) {
-    var v = $('video', box);
-    if (v) { v.muted = true; var r = v.play(); if (r && r.catch) r.catch(function () {}); }
+    [].forEach.call(box.querySelectorAll('video'), function (v) { v.muted = true; var r = v.play(); if (r && r.catch) r.catch(function () {}); });
   }
   function tipClass(base, t) {
-    var n = [].concat(t.img || []).length + (t.video ? 1 : 0);
+    var n = [].concat(t.img || []).length + [].concat(t.video || []).length;
     return base + (t.cls ? ' ' + t.cls : '') + (n > 1 ? ' is-wide' : '');
   }
   function placeTip() {
