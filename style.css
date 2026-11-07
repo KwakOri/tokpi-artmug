@@ -270,6 +270,7 @@ a.credit:hover b { text-decoration: underline; }
 .estimate-sum strong { font-family: var(--display); font-weight: 400; font-size: 34px; color: var(--yellow); line-height: 1.2; }
 .estimate-sum strong small { font-family: var(--body); font-weight: 700; font-size: 18px; color: var(--on-night); }
 .sum-note { margin-top: 8px; font-size: 13px; color: var(--on-night); }
+.sum-go { align-self: center; margin-top: 8px; }
 
 /* steps */
 .steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; counter-reset: s; }
