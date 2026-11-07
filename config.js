@@ -26,7 +26,8 @@ window.TOKPI_CONFIG = {
    *   이미지·영상은 assets/tips/ 아래. 지금 것은 assets/live/miruru.html 화면에서 잘라 냈다.
    */
   options: [
-    { id: 'cards', label: '구독·후원 카드', preview: 'cards', kind: 'won', value: 30000, note: '금액별 후원 카드는 플랫폼마다 금액 구분 기준이 달라 별도 문의로 받아요', tip: { text: '구독·후원이 오면 이런 카드가 떠요', img: ['assets/tips/sub.webp?v=4', 'assets/tips/don.webp?v=4'] } },
+    { id: 'cards', label: '구독·후원 카드', preview: 'cards', kind: 'won', value: 30000, tip: { text: '구독·후원이 오면 이런 카드가 떠요', img: ['assets/tips/sub.webp?v=4', 'assets/tips/don.webp?v=4'] } },
+    { id: 'tiers', label: '금액별 후원 카드', preview: 'tiers', parent: 'cards', ask: true, tip: { text: '플랫폼마다 금액 구분 기준이 달라 별도 문의로 받아요', html: '<div class="tip-tiers"><span class="g0"><b>기본 카드</b>0원~</span><span class="g1"><b>카드 2</b>1만 원~</span><span class="g2"><b>카드 3</b>10만 원~</span></div>' } },
     { id: 'roles', label: '스트리머·구독자 채팅 따로', preview: 'roles', kind: 'won', value: 30000, tip: { cls: 'tip-chat', text: '시청자·스트리머·구독자마다 이름표와 말풍선이 달라요', img: ['assets/tips/viewer.webp?v=3', 'assets/tips/streamer.webp?v=3', 'assets/tips/subchat.webp?v=3'] } },
     { id: 'random', label: '랜덤 요소 추가', preview: 'random', ask: true, tip: { text: '같은 채팅도 올 때마다 조금씩 달라요', html: '<div class="tip-random"><p><b>장식 랜덤</b><span>★</span><span>♥</span><span>✦</span><small>장식 하나당 +1만 원</small></p><p><b>카드 통째로 랜덤·이스터에그</b><span class="wide">가끔 전혀 다른 깜짝 카드가 떠요</span><small>+2~3만 원 선</small></p></div>' } },
     /* 플랫폼 추가: 기본 구성은 플랫폼 1개(위플랩 치지직 등). 1개당 +1만 원, 둘 중 하나만 */
