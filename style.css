@@ -545,7 +545,7 @@ a.credit:hover b { text-decoration: underline; }
 .tip-row { display: flex; align-items: center; gap: 8px; }
 .tip-row .tip-media { flex: 1 1 0; min-width: 0; }
 .tip-media { display: block; width: 100%; height: auto; border-radius: 10px; }
-video.tip-media { background: #fff; border: 2px solid var(--ink); }
+video.tip-media { aspect-ratio: 900 / 738; object-fit: contain; background: #fff; border: 2px solid var(--ink); }
 .tip-text { margin: 8px 2px 0; font-size: 13px; font-weight: 600; line-height: 1.45; text-align: center; }
 .tip-tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
 .tip-tiers span { display: grid; gap: 2px; place-items: center; padding: 14px 4px; border: 2px solid var(--ink); border-radius: 10px; font-size: 11px; color: var(--ink); }

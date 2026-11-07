@@ -207,9 +207,10 @@
   tip.id = 'optTip';
   page.appendChild(tip);
   var tipFor = null, tipLabel = null;
+  /* mp4(H.264)를 먼저 둔다: 아이폰은 webm을 고르면 못 풀어도 다음 source로 넘어가지 않는다 */
   function tipBody(t) {
     var media = '';
-    [].concat(t.video || []).forEach(function (v) { media += '<video class="tip-media" width="900" height="738" autoplay muted loop playsinline poster="' + v + '.jpg"><source src="' + v + '.webm" type="video/webm"><source src="' + v + '.mp4" type="video/mp4"></video>'; });
+    [].concat(t.video || []).forEach(function (v) { media += '<video class="tip-media" width="900" height="738" autoplay muted loop playsinline poster="' + v + '.jpg"><source src="' + v + '.mp4" type="video/mp4"><source src="' + v + '.webm" type="video/webm"></video>'; });
     [].concat(t.img || []).forEach(function (src) { media += '<img class="tip-media" src="' + src + '" alt="">'; });
     var html = media ? '<div class="tip-row">' + media + '</div>' : '';
     if (t.html) html += t.html;
