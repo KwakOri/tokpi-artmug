@@ -505,6 +505,8 @@
     var badge = $('#slotBadge');
     badge.textContent = first ? first.label.replace(/<\/?small>/g, '').replace('년', '년 ') + ' 슬롯 ' + first.left + '자리 남음' + (promo && first.month === promo.month ? ' · ' + promo.tag + ' ' + promo.percent + '% 할인 중' : '') : '이번 슬롯은 마감됐어요';
     badge.classList.toggle('is-full', !first);
+    /* 열린 달이 없으면 견적·신청 양식에 안내를 띄운다(신청은 막지 않음) */
+    $$('[data-noslot]').forEach(function (el) { el.hidden = !!first; });
     badge.hidden = false;
     sendHeight(true);
   }

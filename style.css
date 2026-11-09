@@ -37,6 +37,12 @@ a { color: inherit; }
 h1, h2, h3 { margin: 0; line-height: 1.25; }
 p { margin: 0; }
 [hidden] { display: none !important; }
+.noslot {
+  display: flex; align-items: center; gap: 8px; width: fit-content; margin: 10px 0 0; padding: 6px 14px;
+  font-size: 14px; font-weight: 700; color: var(--ink); background: #ffe0c7; border: 2px solid var(--ink); border-radius: 999px;
+}
+.noslot::before { content: ''; flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
+.order > .noslot { margin: 0; }
 
 .page { position: relative; max-width: 1180px; margin: 0 auto; background: var(--cream); overflow-x: clip; }
 
