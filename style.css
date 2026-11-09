@@ -42,7 +42,7 @@ p { margin: 0; }
   font-size: 14px; font-weight: 700; color: var(--ink); background: #ffe0c7; border: 2px solid var(--ink); border-radius: 999px;
 }
 .noslot::before { content: ''; flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
-.order > .noslot { margin: 0; }
+.order > .noslot, .order-foot > .noslot { margin: 0; }
 
 .page { position: relative; max-width: 1180px; margin: 0 auto; background: var(--cream); overflow-x: clip; }
 
@@ -89,6 +89,7 @@ p { margin: 0; }
 .btn-ink { background: var(--ink); color: var(--yellow); box-shadow: 4px 4px 0 var(--orange); }
 .btn-ink:hover { box-shadow: 6px 6px 0 var(--orange); }
 .btn-paper { background: var(--paper); }
+.btn:disabled, .btn:disabled:hover, .btn:disabled:active { cursor: not-allowed; transform: none; background: #c9c4cf; color: #6f6878; box-shadow: 4px 4px 0 #a39dab; }
 
 /* hero */
 .hero {

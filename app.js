@@ -482,6 +482,9 @@
 
   var SLOT_PILL = { open: function (s) { return s.left + '자리 남음'; }, full: function () { return '마감'; }, soon: function () { return '오픈 예정'; }, off: function () { return '쉬어요'; } };
 
+  /* 시트를 읽어 열린 달이 없을 때만 true. 못 읽으면 막지 않는다. */
+  var noSlot = false;
+
   function renderSlots(rows) {
     var now = new Date();
     var cur = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2);
@@ -505,8 +508,10 @@
     var badge = $('#slotBadge');
     badge.textContent = first ? first.label.replace(/<\/?small>/g, '').replace('년', '년 ') + ' 슬롯 ' + first.left + '자리 남음' + (promo && first.month === promo.month ? ' · ' + promo.tag + ' ' + promo.percent + '% 할인 중' : '') : '이번 슬롯은 마감됐어요';
     badge.classList.toggle('is-full', !first);
-    /* 열린 달이 없으면 견적·신청 양식에 안내를 띄운다(신청은 막지 않음) */
-    $$('[data-noslot]').forEach(function (el) { el.hidden = !!first; });
+    /* 열린 달이 없으면 견적·신청 양식에 안내를 띄우고 양식 복사를 막는다 */
+    noSlot = !first;
+    $$('[data-noslot]').forEach(function (el) { el.hidden = !noSlot; });
+    $('#copyBtn').disabled = noSlot;
     badge.hidden = false;
     sendHeight(true);
   }
@@ -573,6 +578,7 @@
   }
 
   $('#copyBtn').addEventListener('click', function () {
+    if (noSlot) return;
     var text = buildText();
     var done = function () { toast('복사됐어요! 아트머그 문의에 붙여 넣어 주세요'); };
     var fail = function () {
